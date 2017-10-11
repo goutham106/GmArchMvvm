@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GmArchMvvm.iml" filepath="$PROJECT_DIR$/GmArchMvvm.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmarchmvvm/gmarchmvvm.iml" filepath="$PROJECT_DIR$/gmarchmvvm/gmarchmvvm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gmmvp/gmmvp.iml" filepath="$PROJECT_DIR$/gmmvp/gmmvp.iml" />
       <module fileurl="file://$PROJECT_DIR$/gmwidgets/gmwidgets.iml" filepath="$PROJECT_DIR$/gmwidgets/gmwidgets.iml" />
       <module fileurl="file://$PROJECT_DIR$/lifecycle/lifecycle.iml" filepath="$PROJECT_DIR$/lifecycle/lifecycle.iml" />
       <module fileurl="file://$PROJECT_DIR$/repository/repository.iml" filepath="$PROJECT_DIR$/repository/repository.iml" />
