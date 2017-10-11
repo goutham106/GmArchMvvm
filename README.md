@@ -6,7 +6,7 @@ Android MVVM Architecture Components and [Android Architecture Components](https
 Welcome to communicate and discuss.
 
 ## Architecture
-<div align="center"><img src="https://github.com/goutham106/GmArchMvvm/blob/master/rtonumbermatcher/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="50%" height="50%" align=center></div>
+<div align="center"><img src="https://github.com/goutham106/GmArchMvvm/blob/master/rtonumbermatcher/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="25%" height="25%" align=center></div>
 
 
 ## Libraries & References
