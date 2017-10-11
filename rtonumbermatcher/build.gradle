@@ -1,0 +1,187 @@
+apply plugin: 'com.android.application'
+//import com.android.build.OutputFile
+apply from: '../config/quality/quality.gradle'
+android {
+    signingConfigs {
+        config {
+            keyAlias 'rto'
+            keyPassword 'android'
+            storeFile file('/Users/gowtham/Downloads/GmArchMvvm/rtonumbermatcher/key/rtokey')
+            storePassword 'android'
+        }
+    }
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+        multiDexEnabled true
+    }
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+
+            //Other parameters
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            pseudoLocalesEnabled false
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+//    flavorDimensions "api" //, "mode"
+//
+//    productFlavors {
+//        minApi24 {
+//            dimension "api"
+//            minSdkVersion '24'
+//            versionCode 30000 + android.defaultConfig.versionCode
+//            versionNameSuffix "-minApi24"
+//        }
+//
+//        minApi23 {
+//            dimension "api"
+//            minSdkVersion '23'
+//            versionCode 20000  + android.defaultConfig.versionCode
+//            versionNameSuffix "-minApi23"
+//        }
+//
+//        minApi21 {
+//            dimension "api"
+//            minSdkVersion '21'
+//            versionCode 10000  + android.defaultConfig.versionCode
+//            versionNameSuffix "-minApi21"
+//        }
+//    }
+
+
+     /*splits {
+//         abi {
+//             enable true
+//             reset()
+//             include 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+//             universalApk true
+//         }
+
+//          density {
+//             enable true
+//             exclude 'ldpi', 'tvdpi', 'xxxhdpi'
+// //alternatively use the following two lines to only include:
+//             reset()
+//             include 'mdpi', 'hdpi', 'xhdpi', 'xxhdpi','xxxhdpi'
+//             compatibleScreens 'small', 'normal', 'large', 'xlarge'
+//         }
+
+     }
+
+ // map for the version code
+     def abiVersionCodes = ['armeabi': 1,'armeabi-v7a': 2, 'arm64-v8a': 3, 'x86': 4, 'x86_64': 5, 'mips': 6, 'mips64': 7]
+     def densityVersionCodes = ['hdpi': 1,'xhdpi': 2, 'xxhdpi': 3, 'xxxhdpi': 4]
+
+     // This for abi only
+ //    android.applicationVariants.all { variant ->
+ //        // assign different version code for each output
+ //        variant.outputs.each { output ->
+ //            def filter = output.getFilter(OutputFile.ABI)
+ //            if (filter != null) {
+ //                output.versionCodeOverride = abiVersionCodes.get(output.getFilter(OutputFile.ABI)) * 1000000 + android.defaultConfig.versionCode
+ //            }
+ //        }
+ //    }
+
+     // This for density ony
+//     android.applicationVariants.all { variant ->
+//         // assign different version code for each output
+//         variant.outputs.each { output ->
+//             def filter = output.getFilter(OutputFile.DENSITY)
+//             if (filter != null) {
+//                 output.versionCodeOverride = densityVersionCodes.get(output.getFilter(OutputFile.DENSITY)) * 1000000 + android.defaultConfig.versionCode
+//             }
+//         }
+//     }
+
+     // This for both abi and density
+ //    android.applicationVariants.all { variant ->
+ //        variant.outputs.eachWithIndex { output, outputIndex ->
+ //            output.versionCodeOverride = project.ext.versionCodeBase + outputIndex
+ //            println variant.buildType.name + ' - ' + output.getFilter(OutputFile.ABI) + ' - ' + output.getFilter(OutputFile.DENSITY) + ': ' + output.versionCodeOverride
+ //        }
+ //    }*/
+
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //gmarchmvvm
+    compile project(':gmarchmvvm')
+
+    //gmWidgets
+    compile project(':gmwidgets')
+
+    //view
+    compile rootProject.ext.dependencies["constraint-layout"]
+    //mvvm(Lifecycles, LiveData, and ViewModel, Room)
+    annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
+    annotationProcessor rootProject.ext.dependencies["room-compiler"]
+    testCompile(rootProject.ext.dependencies["room-testing"]) {
+        exclude module: 'support-compat'
+        exclude module: 'support-annotations'
+        exclude module: 'support-core-utils'
+        exclude module: 'gson'
+    }
+    //tools
+    provided rootProject.ext.dependencies["javax.annotation"]
+    annotationProcessor(rootProject.ext.dependencies["dagger2-compiler"]) {
+        exclude module: 'js305'
+    }
+    annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
+        exclude module: 'jsr305'
+    }
+    compile rootProject.ext.dependencies["multidex"]
+    //test
+    testCompile rootProject.ext.dependencies["junit"]
+    androidTestCompile(rootProject.ext.dependencies["espresso-core"]) {
+        exclude module: 'support-annotations'
+    }
+    debugCompile rootProject.ext.dependencies["canary-debug"]
+    releaseCompile rootProject.ext.dependencies["canary-release"]
+    testCompile rootProject.ext.dependencies["canary-release"]
+
+   /* implementation ('com.android.databinding:library:1.3.3'){
+        exclude module: 'support-v4'
+        exclude module: 'support-compat'
+        exclude module: 'support-annotations'
+        exclude module: 'support-core-utils'
+    }*/
+}
+//./gradlew -q dependencies rtonumbermatcher:dependencies --configuration debugAndroidTestCompileClasspath

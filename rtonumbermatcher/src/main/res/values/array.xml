@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="checkvalue">
+        <item>Select</item>
+        <item>@string/checkDouble</item>
+        <item>@string/checkTriple</item>
+        <item>@string/checkAll</item>
+    </string-array>
+
+</resources>
