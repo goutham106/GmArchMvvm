@@ -19,9 +19,8 @@ import io.reactivex.subjects.Subject;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * Use {@link ActivityLifecycleable} with {@link Activity} with {@link RxLifecycle}
- *
  */
 @Singleton
 public class ActivityLifecycleForRxLifecycle implements Application.ActivityLifecycleCallbacks {
@@ -35,7 +34,7 @@ public class ActivityLifecycleForRxLifecycle implements Application.ActivityLife
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         if (activity instanceof ActivityLifecycleable) {
             obtainSubject(activity).onNext(ActivityEvent.CREATE);
-            if (activity instanceof FragmentActivity){
+            if (activity instanceof FragmentActivity) {
                 if (mFragmentLifecycle == null) {
                     mFragmentLifecycle = new FragmentLifecycleForRxLifecycle();
                 }

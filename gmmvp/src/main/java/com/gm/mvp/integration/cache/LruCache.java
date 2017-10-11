@@ -13,7 +13,7 @@ import java.util.Map;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * LRU is Least Recently Used, that is, least recently, that is, when the cache is full, will give priority to those recently missed the most inaccessible data
  * This cache strategy is provided by default for the framework and can implement other caching policies, such as disk caching, caching for the framework or developer
  *
@@ -63,7 +63,7 @@ public class LruCache<K, V> implements Cache<K, V> {
     /**
      * When the cache has a deported entry, it will call back this method, the default empty implementation, subclasses can override this method
      *
-     * @param key  To be deported {@code key}
+     * @param key   To be deported {@code key}
      * @param value To be deported {@code value}
      */
     protected void onItemEvicted(K key, V value) {
@@ -88,7 +88,8 @@ public class LruCache<K, V> implements Cache<K, V> {
 
     /**
      * True if the {@code key} has a corresponding {@code value} in the cache and is not {@code null}
-           *
+     *       *
+     *
      * @param key Used to map {@code key}
      */
     @Override
@@ -97,7 +98,7 @@ public class LruCache<K, V> implements Cache<K, V> {
     }
 
     /**
-     *Return this {@code key} in the cache corresponding to the {@code value}, if the return {@code null} that the {@code key} does not correspond to the {@code value}
+     * Return this {@code key} in the cache corresponding to the {@code value}, if the return {@code null} that the {@code key} does not correspond to the {@code value}
      *
      * @param key Used to map {@code key}
      */
@@ -114,7 +115,7 @@ public class LruCache<K, V> implements Cache<K, V> {
      * If {@link #getItemSize} returns a size greater than or equal to the maximum size allowed by the cache, you can not add this entry to the cache
      * This will call {@link #onItemEvicted (Object, Object)} to notify the current deportable entry
      *
-     * @param key Add an entry through this {@code key}
+     * @param key   Add an entry through this {@code key}
      * @param value need to add {@code value}
      */
     @Override
@@ -139,7 +140,7 @@ public class LruCache<K, V> implements Cache<K, V> {
     }
 
     /**
-     *Remove the entry for this {@code key} in the cache and return the {@code value} of the removed item
+     * Remove the entry for this {@code key} in the cache and return the {@code value} of the removed item
      * If it is returned to {@code null} it is possible because the {@code value} of {@code key} is {@code null} or the entry does not exist
      *
      * @param key Use this {@code key} to remove the corresponding entry

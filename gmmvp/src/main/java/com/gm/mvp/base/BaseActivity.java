@@ -27,10 +27,10 @@ import io.reactivex.subjects.Subject;
 
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable {
     protected final String TAG = this.getClass().getSimpleName();
-    private Unbinder mUnbinder;
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     @Inject
     protected P mPresenter;
+    private Unbinder mUnbinder;
 
     @NonNull
     @Override

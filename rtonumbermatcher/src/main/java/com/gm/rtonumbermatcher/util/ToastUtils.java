@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017. Gowtham Parimelazhagan.
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,13 +30,12 @@ import android.widget.Toast;
  */
 public class ToastUtils {
 
-    private ToastUtils() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
-
     private static Toast sToast;
     private static Handler sHandler = new Handler(Looper.getMainLooper());
     private static boolean isJumpWhenMore;
+    private ToastUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * Toast initiation

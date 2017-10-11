@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.gm.lifecycle.delegate;
 
 import android.app.Activity;
@@ -20,19 +36,35 @@ import dagger.android.support.HasSupportFragmentInjector;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
- *
+ * <p>
  * Activity lifecycle agent interface implementation class
  */
 
 public class ActivityDelegateImpl implements ActivityDelegate, HasSupportFragmentInjector {
-    private Activity mActivity;
-    private IActivity iActivity;
+    public static final Parcelable.Creator<ActivityDelegateImpl> CREATOR = new Parcelable.Creator<ActivityDelegateImpl>() {
+        @Override
+        public ActivityDelegateImpl createFromParcel(Parcel source) {
+            return new ActivityDelegateImpl(source);
+        }
+
+        @Override
+        public ActivityDelegateImpl[] newArray(int size) {
+            return new ActivityDelegateImpl[size];
+        }
+    };
     @Inject
     DispatchingAndroidInjector<Fragment> mFragmentInjector;
+    private Activity mActivity;
+    private IActivity iActivity;
 
     public ActivityDelegateImpl(Activity activity) {
         this.mActivity = activity;
         this.iActivity = (IActivity) activity;
+    }
+
+    protected ActivityDelegateImpl(Parcel in) {
+        this.mActivity = in.readParcelable(Activity.class.getClassLoader());
+        this.iActivity = in.readParcelable(IActivity.class.getClassLoader());
     }
 
     @Override
@@ -84,23 +116,6 @@ public class ActivityDelegateImpl implements ActivityDelegate, HasSupportFragmen
     public void writeToParcel(Parcel dest, int flags) {
 
     }
-
-    protected ActivityDelegateImpl(Parcel in) {
-        this.mActivity = in.readParcelable(Activity.class.getClassLoader());
-        this.iActivity = in.readParcelable(IActivity.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<ActivityDelegateImpl> CREATOR = new Parcelable.Creator<ActivityDelegateImpl>() {
-        @Override
-        public ActivityDelegateImpl createFromParcel(Parcel source) {
-            return new ActivityDelegateImpl(source);
-        }
-
-        @Override
-        public ActivityDelegateImpl[] newArray(int size) {
-            return new ActivityDelegateImpl[size];
-        }
-    };
 
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {

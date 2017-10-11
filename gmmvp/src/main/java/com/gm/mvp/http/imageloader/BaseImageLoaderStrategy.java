@@ -7,7 +7,7 @@ import android.content.Context;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * Policy mode, ImageLoader abstract policy class
  */
 

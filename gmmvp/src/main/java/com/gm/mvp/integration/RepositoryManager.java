@@ -20,10 +20,9 @@ import retrofit2.Retrofit;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * Used to manage the network request layer, and the data cache layer, may later add the database request layer
  * Provided to the {@link IModel} layer necessary for Api to do data processing
- *
  */
 @Singleton
 public class RepositoryManager implements IRepositoryManager {
@@ -54,7 +53,7 @@ public class RepositoryManager implements IRepositoryManager {
     public <T> T obtainRetrofitService(Class<T> service) {
         if (mRetrofitServiceCache == null)
             mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE_TYPE);
-        Preconditions.checkNotNull(mRetrofitServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
+        Preconditions.checkNotNull(mRetrofitServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
         T retrofitService;
         synchronized (mRetrofitServiceCache) {
             retrofitService = (T) mRetrofitServiceCache.get(service.getName());
@@ -77,7 +76,7 @@ public class RepositoryManager implements IRepositoryManager {
     public <T> T obtainCacheService(Class<T> cache) {
         if (mCacheServiceCache == null)
             mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE_TYPE);
-        Preconditions.checkNotNull(mCacheServiceCache,"Cannot return null from a Cache.Factory#build(int) method");
+        Preconditions.checkNotNull(mCacheServiceCache, "Cannot return null from a Cache.Factory#build(int) method");
         T cacheService;
         synchronized (mCacheServiceCache) {
             cacheService = (T) mCacheServiceCache.get(cache.getName());

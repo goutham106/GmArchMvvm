@@ -10,13 +10,13 @@ import com.gm.mvp.di.module.GmConfigModule;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
- *
+ * <p>
  * Frame configuration interface
  */
 
 public interface ConfigGm {
     /**
-     *Use {@link GmConfigModule.Builder} to configure some configuration parameters for the framework
+     * Use {@link GmConfigModule.Builder} to configure some configuration parameters for the framework
      *
      * @param context: Context
      * @param builder: GmConfigModule.Builder

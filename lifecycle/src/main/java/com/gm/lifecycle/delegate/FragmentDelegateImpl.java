@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.gm.lifecycle.delegate;
 
 import android.content.Context;
@@ -17,20 +33,36 @@ import dagger.android.support.AndroidSupportInjection;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
- *
+ * <p>
  * Fragment Lifecycle Proxy Interface Implementation Class
  */
 
 public class FragmentDelegateImpl implements FragmentDelegate {
+    public static final Creator<FragmentDelegateImpl> CREATOR = new Creator<FragmentDelegateImpl>() {
+        @Override
+        public FragmentDelegateImpl createFromParcel(Parcel source) {
+            return new FragmentDelegateImpl(source);
+        }
+
+        @Override
+        public FragmentDelegateImpl[] newArray(int size) {
+            return new FragmentDelegateImpl[size];
+        }
+    };
     private FragmentManager mFragmentManager;
     private Fragment mFragment;
     private IFragment iFragment;
-
 
     public FragmentDelegateImpl(FragmentManager fragmentManager, Fragment fragment) {
         this.mFragmentManager = fragmentManager;
         this.mFragment = fragment;
         this.iFragment = (IFragment) fragment;
+    }
+
+    protected FragmentDelegateImpl(Parcel in) {
+        this.mFragmentManager = in.readParcelable(FragmentManager.class.getClassLoader());
+        this.mFragment = in.readParcelable(Fragment.class.getClassLoader());
+        this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
     }
 
     @Override
@@ -117,22 +149,4 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public void writeToParcel(Parcel dest, int flags) {
 
     }
-
-    protected FragmentDelegateImpl(Parcel in) {
-        this.mFragmentManager = in.readParcelable(FragmentManager.class.getClassLoader());
-        this.mFragment = in.readParcelable(Fragment.class.getClassLoader());
-        this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
-    }
-
-    public static final Creator<FragmentDelegateImpl> CREATOR = new Creator<FragmentDelegateImpl>() {
-        @Override
-        public FragmentDelegateImpl createFromParcel(Parcel source) {
-            return new FragmentDelegateImpl(source);
-        }
-
-        @Override
-        public FragmentDelegateImpl[] newArray(int size) {
-            return new FragmentDelegateImpl[size];
-        }
-    };
 }

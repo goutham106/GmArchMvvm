@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
- *
+ * <p>
+ * <p>
  * Used to cache the necessary components in the framework, the developer can {@link GlobalConfigModule.Builder # cacheFactory (Factory)} for the framework to provide cache strategy
  * Developers can also use their own daily use
  *
@@ -18,20 +18,6 @@ import android.support.annotation.Nullable;
  * @see LruCache
  */
 public interface Cache<K, V> {
-    interface Factory {
-
-        int DEFAULT_CACHE_SIZE = 100;
-
-        /**
-         * Returns a new cache
-         *
-         * @param type 框架中模块类型的 Id
-         * @return
-         */
-        @NonNull
-        Cache build(int type);
-    }
-
     /**
      * 返回当前缓存已占用的总 size
      *
@@ -88,4 +74,18 @@ public interface Cache<K, V> {
      * 清除缓存中所有的内容
      */
     void clear();
+
+    interface Factory {
+
+        int DEFAULT_CACHE_SIZE = 100;
+
+        /**
+         * Returns a new cache
+         *
+         * @param type 框架中模块类型的 Id
+         * @return
+         */
+        @NonNull
+        Cache build(int type);
+    }
 }

@@ -16,9 +16,8 @@ import io.reactivex.subjects.Subject;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * Use {@link FragmentLifecycleable} with {@link Fragment} with {@link RxLifecycle}
-
  */
 public class FragmentLifecycleForRxLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
 

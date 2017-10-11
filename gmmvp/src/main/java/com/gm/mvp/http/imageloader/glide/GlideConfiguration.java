@@ -12,7 +12,6 @@ import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
-
 import com.gm.mvp.http.OkHttpUrlLoader;
 import com.gm.mvp.http.imageloader.BaseImageLoaderStrategy;
 import com.gm.mvp.utils.GmUtils;
@@ -27,7 +26,7 @@ import java.io.InputStream;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * Glide Configuration
  *
  * @link http://bumptech.github.io/glide/doc/configuration.html

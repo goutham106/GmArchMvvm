@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.gm.repository.utils;
 
 import android.support.annotation.Nullable;
@@ -31,20 +47,13 @@ import static timber.log.Timber.w;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
- *
+ * <p>
  * Http Request / response interceptor
  */
 @Singleton
 public class RequestInterceptor implements Interceptor {
-    private GlobalHttpHandler mHandler;
     private final Level printLevel;
-
-    public enum Level {
-        NONE,       //Do not print log
-        REQUEST,    //Only print request information
-        RESPONSE,   //Print only the response message
-        ALL         //All data is printed
-    }
+    private GlobalHttpHandler mHandler;
 
     @Inject
     public RequestInterceptor(@Nullable GlobalHttpHandler handler, @Nullable Level level) {
@@ -53,6 +62,57 @@ public class RequestInterceptor implements Interceptor {
             printLevel = Level.ALL;
         else
             printLevel = level;
+    }
+
+    public static String parseParams(RequestBody body) throws UnsupportedEncodingException {
+        if (isParseable(body.contentType())) {
+            try {
+                Buffer requestbuffer = new Buffer();
+                body.writeTo(requestbuffer);
+                Charset charset = Charset.forName("UTF-8");
+                MediaType contentType = body.contentType();
+                if (contentType != null) {
+                    charset = contentType.charset(charset);
+                }
+                return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "This params isn't parsed";
+    }
+
+    public static boolean isParseable(MediaType mediaType) {
+        if (mediaType == null)
+            return false;
+        return mediaType.toString().toLowerCase().contains("text")
+                || isJson(mediaType) || isForm(mediaType)
+                || isHtml(mediaType) || isXml(mediaType);
+    }
+
+    public static boolean isJson(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("json");
+    }
+
+    public static boolean isXml(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("xml");
+    }
+
+    public static boolean isHtml(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("html");
+    }
+
+    public static boolean isForm(MediaType mediaType) {
+        return mediaType.toString().toLowerCase().contains("x-www-form-urlencoded");
+    }
+
+    public static String convertCharset(Charset charset) {
+        String s = charset.toString();
+        int i = s.indexOf("[");
+        if (i == -1)
+            return s;
+        return s.substring(i + 1, s.length() - 1);
     }
 
     @Override
@@ -150,11 +210,9 @@ public class RequestInterceptor implements Interceptor {
         return bodyString;
     }
 
-
     private String getTag(Request request) {
         return String.format(" [%s] 「 %s 」", request.method(), request.url().toString());
     }
-
 
     /**
      * Resolve the contents of the server response
@@ -179,54 +237,10 @@ public class RequestInterceptor implements Interceptor {
         }
     }
 
-    public static String parseParams(RequestBody body) throws UnsupportedEncodingException {
-        if (isParseable(body.contentType())) {
-            try {
-                Buffer requestbuffer = new Buffer();
-                body.writeTo(requestbuffer);
-                Charset charset = Charset.forName("UTF-8");
-                MediaType contentType = body.contentType();
-                if (contentType != null) {
-                    charset = contentType.charset(charset);
-                }
-                return URLDecoder.decode(requestbuffer.readString(charset), convertCharset(charset));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return "This params isn't parsed";
-    }
-
-    public static boolean isParseable(MediaType mediaType) {
-        if (mediaType == null)
-            return false;
-        return mediaType.toString().toLowerCase().contains("text")
-                || isJson(mediaType) || isForm(mediaType)
-                || isHtml(mediaType) || isXml(mediaType);
-    }
-
-    public static boolean isJson(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("json");
-    }
-
-    public static boolean isXml(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("xml");
-    }
-
-    public static boolean isHtml(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("html");
-    }
-
-    public static boolean isForm(MediaType mediaType) {
-        return mediaType.toString().toLowerCase().contains("x-www-form-urlencoded");
-    }
-
-    public static String convertCharset(Charset charset) {
-        String s = charset.toString();
-        int i = s.indexOf("[");
-        if (i == -1)
-            return s;
-        return s.substring(i + 1, s.length() - 1);
+    public enum Level {
+        NONE,       //Do not print log
+        REQUEST,    //Only print request information
+        RESPONSE,   //Print only the response message
+        ALL         //All data is printed
     }
 }

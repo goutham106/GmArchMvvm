@@ -5,7 +5,7 @@ package com.gm.mvp.integration.cache;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * When building {@link Cache}, use the type declared in {@link CacheType} to distinguish between different modules
  * To build different caching strategies for different modules
  *

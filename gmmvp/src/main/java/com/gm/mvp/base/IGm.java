@@ -9,7 +9,7 @@ import com.gm.mvp.di.module.GmModule;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
- *
+ * <p>
  * Application inherits the interface, you can have GmComponent provided by the method.
  */
 

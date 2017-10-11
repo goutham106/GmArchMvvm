@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.gm.rtonumbermatcher.util;
 
 import android.graphics.drawable.Drawable;
@@ -23,15 +39,11 @@ import timber.log.Timber;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/26/17.
- *
+ * <p>
  * Fragment related tools
  */
 
 public final class FragmentUtils {
-
-    private FragmentUtils() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
 
     private static final int TYPE_ADD_FRAGMENT = 0x01;
     private static final int TYPE_REMOVE_FRAGMENT = 0x01 << 1;
@@ -41,10 +53,12 @@ public final class FragmentUtils {
     private static final int TYPE_HIDE_FRAGMENT = 0x01 << 5;
     private static final int TYPE_SHOW_FRAGMENT = 0x01 << 6;
     private static final int TYPE_HIDE_SHOW_FRAGMENT = 0x01 << 7;
-
     private static final String ARGS_ID = "args_id";
     private static final String ARGS_IS_HIDE = "args_is_hide";
     private static final String ARGS_IS_ADD_STACK = "args_is_add_stack";
+    private FragmentUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * Add fragment
@@ -179,8 +193,8 @@ public final class FragmentUtils {
             List<SharedElement> list = lists[i];
             if (fragment != null && list != null) {
 //                if (list != null) {
-                    putArgs(fragment, new Args(containerId, showIndex != i, false));
-                    return operateFragment(fragmentManager, null, fragment, TYPE_ADD_FRAGMENT, list.toArray(new SharedElement[0]));
+                putArgs(fragment, new Args(containerId, showIndex != i, false));
+                return operateFragment(fragmentManager, null, fragment, TYPE_ADD_FRAGMENT, list.toArray(new SharedElement[0]));
 //                }
             }
         }
@@ -902,6 +916,10 @@ public final class FragmentUtils {
         }
     }
 
+    public interface OnBackClickListener {
+        boolean onBackClick();
+    }
+
     static class Args {
         int id;
         boolean isHide;
@@ -937,9 +955,5 @@ public final class FragmentUtils {
         public String toString() {
             return fragment.getClass().getSimpleName() + "->" + ((next == null || next.isEmpty()) ? "no child" : next.toString());
         }
-    }
-
-    public interface OnBackClickListener {
-        boolean onBackClick();
     }
 }

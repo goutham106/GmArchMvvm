@@ -7,7 +7,7 @@ import android.widget.ImageView;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * The public picture loads the configuration and is free to expand
  */
 

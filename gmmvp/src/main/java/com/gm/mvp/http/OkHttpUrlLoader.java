@@ -16,7 +16,7 @@ import okhttp3.OkHttpClient;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * A simple model loader for fetching media over http/https using OkHttp.
  */
 
@@ -46,17 +46,6 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
         private static volatile Call.Factory internalClient;
         private Call.Factory client;
 
-        private static Call.Factory getInternalClient() {
-            if (internalClient == null) {
-                synchronized (Factory.class) {
-                    if (internalClient == null) {
-                        internalClient = new OkHttpClient();
-                    }
-                }
-            }
-            return internalClient;
-        }
-
         /**
          * Constructor for a new Factory that runs requests using a static singleton client.
          */
@@ -71,6 +60,17 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
          */
         public Factory(Call.Factory client) {
             this.client = client;
+        }
+
+        private static Call.Factory getInternalClient() {
+            if (internalClient == null) {
+                synchronized (Factory.class) {
+                    if (internalClient == null) {
+                        internalClient = new OkHttpClient();
+                    }
+                }
+            }
+            return internalClient;
         }
 
         @Override

@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.gm.archmvvm.base;
 
 import android.arch.lifecycle.LifecycleObserver;
@@ -20,7 +36,7 @@ import javax.inject.Inject;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
- *
+ * <p>
  * MVVM GmFragment
  */
 
@@ -29,15 +45,13 @@ public abstract class GmFragment<DB extends ViewDataBinding, VM extends IViewMod
     protected final String TAG = this.getClass().getName();
     protected boolean mVisible = false;//Is it visible?
     protected boolean mFirst = true;//Whether the first load
-    private View mRootView;
-
     //DataBinding
     protected DB mBinding;
-
     //MVVM ViewModel
     @Inject
     protected ViewModelProvider.Factory mViewModelFactory;
     protected VM mViewModel;//instance in subclass; Automatic destruction
+    private View mRootView;
 
     public GmFragment() {
         setArguments(new Bundle());

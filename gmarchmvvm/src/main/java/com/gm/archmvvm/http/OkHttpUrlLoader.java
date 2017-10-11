@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.gm.archmvvm.http;
 
 import com.bumptech.glide.load.Options;
@@ -16,7 +32,7 @@ import okhttp3.OkHttpClient;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * A simple model loader for fetching media over http/https using OkHttp.
  */
 
@@ -46,17 +62,6 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
         private static volatile Call.Factory internalClient;
         private Call.Factory client;
 
-        private static Call.Factory getInternalClient() {
-            if (internalClient == null) {
-                synchronized (Factory.class) {
-                    if (internalClient == null) {
-                        internalClient = new OkHttpClient();
-                    }
-                }
-            }
-            return internalClient;
-        }
-
         /**
          * Constructor for a new Factory that runs requests using a static singleton client.
          */
@@ -71,6 +76,17 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
          */
         public Factory(Call.Factory client) {
             this.client = client;
+        }
+
+        private static Call.Factory getInternalClient() {
+            if (internalClient == null) {
+                synchronized (Factory.class) {
+                    if (internalClient == null) {
+                        internalClient = new OkHttpClient();
+                    }
+                }
+            }
+            return internalClient;
         }
 
         @Override

@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.gm.gmwidgets;
 
 import android.animation.ValueAnimator;
@@ -28,23 +44,21 @@ import android.widget.TextView;
 //        secretTextView.setIsVisible(false);
 
 public class GmSecretTextView extends TextView {
+    ValueAnimator animator;
     private String mTextString;
     private SpannableString mSpannableString;
-
     private double[] mAlphas;
     private MutableForegroundColorSpan[] mSpans;
     private boolean mIsVisible;
     private boolean mIsTextResetting = false;
-    private int mDuration = 2500;
-
-    ValueAnimator animator;
     ValueAnimator.AnimatorUpdateListener listener = new ValueAnimator.AnimatorUpdateListener() {
         @Override
         public void onAnimationUpdate(ValueAnimator valueAnimator) {
-            Float percent = (Float)valueAnimator.getAnimatedValue();
+            Float percent = (Float) valueAnimator.getAnimatedValue();
             resetSpannableString(mIsVisible ? percent : 2.0f - percent);
         }
     };
+    private int mDuration = 2500;
 
     public GmSecretTextView(Context context) {
         super(context);
@@ -56,14 +70,14 @@ public class GmSecretTextView extends TextView {
         init();
     }
 
-    private void init(){
+    private void init() {
         this.mIsVisible = false;
         animator = ValueAnimator.ofFloat(0.0f, 2.0f);
         animator.addUpdateListener(listener);
         animator.setDuration(mDuration);
     }
 
-    public void toggle(){
+    public void toggle() {
         if (mIsVisible) {
             hide();
         } else {
@@ -71,26 +85,26 @@ public class GmSecretTextView extends TextView {
         }
     }
 
-    public void show(){
+    public void show() {
         mIsVisible = true;
         animator.start();
     }
 
-    public void hide(){
+    public void hide() {
         mIsVisible = false;
         animator.start();
     }
 
-    public void setIsVisible(boolean isVisible){
+    public boolean getIsVisible() {
+        return mIsVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
         mIsVisible = isVisible;
         resetSpannableString(isVisible == true ? 2.0f : 0.0f);
     }
 
-    public boolean getIsVisible(){
-        return mIsVisible;
-    }
-
-    private void resetSpannableString(double percent){
+    private void resetSpannableString(double percent) {
         mIsTextResetting = true;
 
         int color = getCurrentTextColor();
@@ -104,21 +118,21 @@ public class GmSecretTextView extends TextView {
         mIsTextResetting = false;
     }
 
-    private void resetAlphas(int length){
+    private void resetAlphas(int length) {
         mAlphas = new double[length];
-        for(int i=0; i < mAlphas.length; i++){
-            mAlphas[i] = Math.random()-1;
+        for (int i = 0; i < mAlphas.length; i++) {
+            mAlphas[i] = Math.random() - 1;
         }
     }
 
-    private void resetIfNeeded(){
-        if (!mIsTextResetting){
+    private void resetIfNeeded() {
+        if (!mIsTextResetting) {
             mTextString = getText().toString();
             mSpannableString = new SpannableString(this.mTextString);
             mSpans = new MutableForegroundColorSpan[this.mTextString.length()];
             for (int i = 0; i < this.mTextString.length(); i++) {
                 MutableForegroundColorSpan span = new MutableForegroundColorSpan();
-                mSpannableString.setSpan(span, i, i+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                mSpannableString.setSpan(span, i, i + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 mSpans[i] = span;
             }
             resetAlphas(mTextString.length());
@@ -137,11 +151,11 @@ public class GmSecretTextView extends TextView {
         resetIfNeeded();
     }
 
-    private int clamp(double f){
-        return (int)(255*Math.min(Math.max(f, 0), 1));
+    private int clamp(double f) {
+        return (int) (255 * Math.min(Math.max(f, 0), 1));
     }
 
-    public void setDuration(int duration){
+    public void setDuration(int duration) {
         this.mDuration = duration;
         animator.setDuration(duration);
     }

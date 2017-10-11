@@ -12,8 +12,8 @@ import com.gm.repository.utils.Preconditions;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
- *
- *
+ * <p>
+ * <p>
  * https://stackoverflow.com/questions/70689/what-is-an-efficient-way-to-implement-a-singleton-pattern-in-java
  * Get GmComponent to get everything in the frame
  * {@link GmComponent}

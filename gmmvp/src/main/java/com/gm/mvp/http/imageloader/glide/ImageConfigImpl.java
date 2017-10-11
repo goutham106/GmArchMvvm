@@ -40,6 +40,10 @@ public class ImageConfigImpl extends BaseImageConfig {
         this.isClearDiskCache = builder.isClearDiskCache;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public int getCacheStrategy() {
         return cacheStrategy;
     }
@@ -62,10 +66,6 @@ public class ImageConfigImpl extends BaseImageConfig {
 
     public boolean isClearDiskCache() {
         return isClearDiskCache;
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     public static final class Builder {

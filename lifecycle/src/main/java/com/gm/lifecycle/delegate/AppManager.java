@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2017 Gowtham Parimelazhagan.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package com.gm.lifecycle.delegate;
 
 import android.app.Activity;
@@ -28,25 +44,24 @@ import timber.log.Timber;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
- *
+ * <p>
  * Used to manage all activities, and activities in the foreground
  * You can perform the corresponding method by directly holding the AppManager object
  * You can also use {@link #post (Message)},
  * remote control implementation of the corresponding method, usage and EventBus similar
- *
  */
 @Singleton
 public final class AppManager {
-    protected final String TAG = this.getClass().getSimpleName();
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";//true Do not need to join the Activity container for unified management, and vice versa
     public static final int START_ACTIVITY = 5000;
     public static final int SHOW_SNACKBAR = 5001;
     public static final int KILL_ALL = 5002;
     public static final int APP_EXIT = 5003;
-    private Application mApplication;
+    protected final String TAG = this.getClass().getSimpleName();
     //Manage all activities
     public List<Activity> mActivityList;
+    private Application mApplication;
     //The current activity in the foreground
     private Activity mCurrentActivity;
     //Provides an onReceive method for external extension AppManager
@@ -58,6 +73,14 @@ public final class AppManager {
         EventBus.getDefault().register(this);
     }
 
+    /**
+     * Use this method to remotely control AppManager,Make {@link #onReceive (Message)} execute the corresponding method
+     *
+     * @param msg
+     */
+    public static void post(Message msg) {
+        EventBus.getDefault().post(msg, APPMANAGER_MESSAGE);
+    }
 
     /**
      * Through the eventbus post event, the remote control performs the corresponding method
@@ -97,29 +120,19 @@ public final class AppManager {
             startActivity((Class) message.obj);
     }
 
-
     public HandleListener getHandleListener() {
         return mHandleListener;
     }
 
     /**
      * The method @{@link #onReceive} (remote remote control AppManager) provided to the external extension AppManager
-          * Suggested in {@link com.gm.lifecycle.ConfigLifecycle # injectAppLifecycle (Context, List)}
-     * Use {@link AppLifecycles # onCreate (Application)} in the App initialization, use this method passed custom {@link HandleListener}
+     *      * Suggested in {@link com.gm.lifecycle.ConfigLifecycle # injectAppLifecycle (Context, List)}
+     *  Use {@link AppLifecycles # onCreate (Application)} in the App initialization, use this method passed custom {@link HandleListener}
      *
      * @param handleListener
      */
     public void setHandleListener(HandleListener handleListener) {
         this.mHandleListener = handleListener;
-    }
-
-    /**
-     * Use this method to remotely control AppManager,Make {@link #onReceive (Message)} execute the corresponding method
-     *
-     * @param msg
-     */
-    public static void post(Message msg) {
-        EventBus.getDefault().post(msg, APPMANAGER_MESSAGE);
     }
 
     /**
@@ -176,6 +189,23 @@ public final class AppManager {
     }
 
     /**
+     * Get the activity in the foreground (to ensure that the activity is in the visible state, that is not called onStop), to obtain the activity duration
+     * Is before the onStop, so if this activity calls the onStop method, no other activity back to the foreground (the user returns to the desktop or open other App will appear this situation)
+     * It is possible to call {@link #getCurrentActivity ()} to return null, so please note that the scene is not the same as {@link #getTopActivity ()}
+     * <p>
+     * Example usage:
+     * Use scenes that are more appropriate, only need to be performed in the visible state of the activity
+     * If the background service to perform a task, you need to let the front of the activity, to make a response to the operation or other operations, such as pop-up Dialog, then in the service can use {@link #getCurrentActivity ()
+     *  * If the return is null, that there is no foreground activity (the user returns to the desktop or open other App will appear this situation), then do nothing, not null, then pop up Dialog
+     *  *
+     *
+     * @return
+     */
+    public Activity getCurrentActivity() {
+        return mCurrentActivity != null ? mCurrentActivity : null;
+    }
+
+    /**
      * Will be in the foreground of the activity assigned to the currentActivity, pay attention to this method is in the implementation of the onResume method will be the top of the top of the activity assigned to the currentActivity
      * So at the top of the stack implementation of the onCreate method using {@link #getCurrentActivity ()} is not the current top of the stack activity, may be the last activity
      * If {@link #getCurrentActivity ()} is used when the first activity of the App executes the onCreate method, a return is null
@@ -188,24 +218,9 @@ public final class AppManager {
     }
 
     /**
-     * Get the activity in the foreground (to ensure that the activity is in the visible state, that is not called onStop), to obtain the activity duration
-     * Is before the onStop, so if this activity calls the onStop method, no other activity back to the foreground (the user returns to the desktop or open other App will appear this situation)
-     * It is possible to call {@link #getCurrentActivity ()} to return null, so please note that the scene is not the same as {@link #getTopActivity ()}
-     * <p>
-     * Example usage:
-     * Use scenes that are more appropriate, only need to be performed in the visible state of the activity
-     * If the background service to perform a task, you need to let the front of the activity, to make a response to the operation or other operations, such as pop-up Dialog, then in the service can use {@link #getCurrentActivity ()
-     * If the return is null, that there is no foreground activity (the user returns to the desktop or open other App will appear this situation), then do nothing, not null, then pop up Dialog
-     *
-     * @return
-     */
-    public Activity getCurrentActivity() {
-        return mCurrentActivity != null ? mCurrentActivity : null;
-    }
-
-    /**
      * Get the activity at the top of the stack, this method does not guarantee that the obtained activity is in a visible state, even if the App enters the background will return to the current top of the activity
      * So the basic situation will not appear null, more suitable for most of the use of scenes, such as startActivity, Glide load pictures
+     *
      * @return
      */
     public Activity getTopActivity() {

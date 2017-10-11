@@ -10,10 +10,9 @@ import com.gm.mvp.mvp.IModel;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * Used to manage the network request layer, and the data cache layer, may later add the database request layer
  * Provided to {@link IModel} necessary Api for data processing
- *
  */
 public interface IRepositoryManager {
 

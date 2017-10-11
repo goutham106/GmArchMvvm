@@ -10,9 +10,8 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
- *
+ * <p>
  * Let {@link Activity} implement this interface to use {@link RxLifecycle}
- *
  */
 public interface ActivityLifecycleable extends Lifecycleable<ActivityEvent> {
 }

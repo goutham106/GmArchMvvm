@@ -5,7 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-
 import com.gm.mvp.base.ConfigGm;
 
 import java.util.ArrayList;
@@ -25,27 +24,6 @@ public final class ManifestGmParser {
 
     public ManifestGmParser(Context context) {
         this.context = context;
-    }
-
-    public List<ConfigGm> parse() {
-        List<ConfigGm> armses = new ArrayList<>();
-        try {
-            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
-                    context.getPackageName(), PackageManager.GET_META_DATA);
-            if (appInfo.metaData != null) {
-                for (String key : appInfo.metaData.keySet()) {
-                    if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
-                        Log.d("ManifestGmParser ---> ",
-                                String.format("Find ConfigArms in [%s]", key));
-                        armses.add(parseModule(key));
-                    }
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException("Unable to find metadata to parse ConfigArms", e);
-        }
-
-        return armses;
     }
 
     private static ConfigGm parseModule(String className) {
@@ -69,5 +47,26 @@ public final class ManifestGmParser {
             throw new RuntimeException("Expected instanceof ConfigArms, but found: " + arms);
         }
         return (ConfigGm) arms;
+    }
+
+    public List<ConfigGm> parse() {
+        List<ConfigGm> armses = new ArrayList<>();
+        try {
+            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
+                    context.getPackageName(), PackageManager.GET_META_DATA);
+            if (appInfo.metaData != null) {
+                for (String key : appInfo.metaData.keySet()) {
+                    if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
+                        Log.d("ManifestGmParser ---> ",
+                                String.format("Find ConfigArms in [%s]", key));
+                        armses.add(parseModule(key));
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException("Unable to find metadata to parse ConfigArms", e);
+        }
+
+        return armses;
     }
 }
