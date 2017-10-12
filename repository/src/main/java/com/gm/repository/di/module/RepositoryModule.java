@@ -20,12 +20,15 @@ import android.app.Application;
 
 import com.gm.repository.IRepositoryManager;
 import com.gm.repository.RepositoryManager;
+import com.gm.repository.cache.Cache;
+import com.gm.repository.cache.CacheType;
 
 import javax.inject.Singleton;
 
 import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
+import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
 
 /**
@@ -36,6 +39,7 @@ import retrofit2.Retrofit;
  * <p>
  * Dagger RepositoryModule
  */
+@SuppressWarnings("all")
 @Module
 public class RepositoryModule {
     private Application mApplication;
@@ -46,7 +50,15 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    IRepositoryManager provideRepositoryManager(Lazy<Retrofit> retrofit, DBModule.RoomConfiguration roomConfiguration) {
-        return new RepositoryManager(mApplication, retrofit, roomConfiguration);
+    IRepositoryManager provideRepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache,
+                                                Cache.Factory cacheFactory,
+                                                DBModule.RoomConfiguration roomConfiguration) {
+        return new RepositoryManager(mApplication, retrofit, rxCache, cacheFactory, roomConfiguration);
+    }
+
+    @Singleton
+    @Provides
+    Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+        return cacheFactory.build(CacheType.EXTRAS_CACHE_TYPE);
     }
 }

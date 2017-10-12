@@ -19,6 +19,8 @@ package com.gm.rtonumbermatcher.app;
 import android.content.Context;
 
 import com.gm.repository.ConfigRepository;
+import com.gm.repository.cache.Cache;
+import com.gm.repository.cache.LruCache;
 import com.gm.repository.di.module.RepositoryConfigModule;
 import com.gm.repository.utils.RequestInterceptor;
 import com.gm.rtonumbermatcher.BuildConfig;
@@ -39,8 +41,6 @@ public class RepositoryConfiguration implements ConfigRepository {
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
 
         builder.baseUrl("www")
-                //Customize your own image loading logic
-                //                .imageLoaderStrategy(new CustomLoaderStrategy())
                 // Here to provide a global processing Http request and response to the results of the processing class, the client can step ahead of the server to get the results of the return
                 .globalHttpHandler(new GlobalHttpHandlerImpl())
                 // Used to deal with all the errors occurred in rxjava, rxjava occurred in each error will call back this interface
@@ -63,6 +63,10 @@ public class RepositoryConfiguration implements ConfigRepository {
                     // okhttpBuilder.sslSocketFactory()
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
                 })
+                .rxCacheConfiguration((context1, rxCacheBuilder) -> {
+                    //Here you can customize the configuration of RxCache parameters
+                    rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
+                })
                 .roomConfiguration((context1, roomBuilder) -> {
                     //Here you can customize the configuration RoomDatabase, such as database migration upgrade
 /*                    roomBuilder.addMigrations(new Migration(1, 2) {
@@ -72,6 +76,19 @@ public class RepositoryConfiguration implements ConfigRepository {
                             // Since we didn't alter the table, there's nothing else to do here.
                         }
                     });*/
+                })
+                //According to the current situation of the project and the environment for the framework of certain components to provide a custom cache strategy, with a strong scalability
+                .cacheFactory(type -> {
+                    switch (type) {
+                        case EXTRAS_CACHE_TYPE:
+                            //External extras can only cache up to 500 content by default
+                            return new LruCache(500);
+                        /*case CUSTOM_CACHE_TYPE:
+                            return new CustomCache();//Customize Cache*/
+                        default:
+                            //RepositoryManager In the container default cache of 100 content
+                            return new LruCache(Cache.Factory.DEFAULT_CACHE_SIZE);
+                    }
                 });
     }
 }

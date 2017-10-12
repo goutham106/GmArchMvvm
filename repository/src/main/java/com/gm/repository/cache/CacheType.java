@@ -14,27 +14,20 @@
  *    limitations under the License.
  */
 
-package com.gm.rtonumbermatcher.app;
-
-import android.content.Context;
-
-import com.gm.archmvvm.base.ConfigGm;
-import com.gm.archmvvm.di.module.GmConfigModule;
+package com.gm.repository.cache;
 
 /**
  * Author     : Gowtham
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
- * Created on : 10/5/17.
+ * Created on : 9/18/17.
+ *
+ * Cache type, different modules have different cache strategies
  */
-
-public class GmConfiguration implements ConfigGm {
-
-    @Override
-    public void applyOptions(Context context, GmConfigModule.Builder builder) {
-        //Customize your own image loading logic
-        //builder.imageLoaderStrategy(new CustomLoaderStrategy());
-    }
-
-
+public enum CacheType {
+    RETROFIT_SERVICE_CACHE_TYPE,//RepositoryManager's RetrofitService container type
+    CACHE_SERVICE_CACHE_TYPE,//RepositoryManager CacheService container type
+    ROOM_DATABASE_CACHE_TYPE,//RepositoryManager RoomDatabase container type
+    EXTRAS_CACHE_TYPE,//External use type
+    CUSTOM_CACHE_TYPE//Customize the cache type for easy expansion
 }

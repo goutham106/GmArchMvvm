@@ -18,6 +18,7 @@ package com.gm.repository.di.component;
 
 import com.gm.repository.IRepositoryManager;
 import com.gm.repository.RepositoryInjector;
+import com.gm.repository.cache.Cache;
 import com.gm.repository.di.module.ClientModule;
 import com.gm.repository.di.module.RepositoryConfigModule;
 import com.gm.repository.di.module.RepositoryModule;
@@ -52,6 +53,9 @@ public interface RepositoryComponent {
 
     //Provide cache file
     File cacheFile();
+
+    //Provide a cache for external use, do not store large amounts of data
+    Cache<String, Object> extras();
 
     void inject(RepositoryInjector repositoryInjector);
 }

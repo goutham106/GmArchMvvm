@@ -221,7 +221,3 @@
 ################Write your own class of operations#################
 #-keep class com.gm.rtonumbermatcher.**{*;}
 
-#-ignorewarnings
-#-keep class * {
-#    public private *;
-#    }

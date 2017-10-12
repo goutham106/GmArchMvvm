@@ -87,6 +87,13 @@ dependencies {
     compile(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
+    compile(rootProject.ext.dependencies["rxcache"]) {
+        exclude module: 'rxjava'
+        exclude module: 'dagger'
+    }
+    compile(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
+        exclude module: 'gson'
+    }
 
     //tools
     provided rootProject.ext.dependencies["javax.annotation"]

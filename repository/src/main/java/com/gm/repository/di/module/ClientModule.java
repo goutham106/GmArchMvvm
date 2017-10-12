@@ -24,18 +24,23 @@ import android.support.annotation.Nullable;
 import com.gm.repository.http.GlobalHttpHandler;
 import com.gm.repository.rxerrorhandler.core.RxErrorHandler;
 import com.gm.repository.rxerrorhandler.handler.listener.ResponseErrorListener;
+import com.gm.repository.utils.DataHelper;
 import com.gm.repository.utils.RequestInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.rx_cache2.internal.RxCache;
+import io.victoralbertos.jolyglot.GsonSpeaker;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -144,6 +149,36 @@ public class ClientModule {
         return builder.create();
     }
 
+    /**
+     * provide {@link RxCache}
+     *
+     * @param cacheDirectory RxCache cache path
+     * @return
+     */
+    @Singleton
+    @Provides
+    RxCache provideRxCache(@Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
+        RxCache.Builder builder = new RxCache.Builder();
+        if (configuration != null)
+            configuration.configRxCache(mApplication, builder);
+        return builder
+                .persistence(cacheDirectory, new GsonSpeaker());
+    }
+
+    /**
+     * You need to provide a cache path to {@link RxCache}
+     *
+     * @param cacheDir
+     * @return
+     */
+    @Singleton
+    @Provides
+    @Named("RxCacheDirectory")
+    File provideRxCacheDirectory(File cacheDir) {
+        File cacheDirectory = new File(cacheDir, "RxCache");
+        return DataHelper.makeDirs(cacheDirectory);
+    }
+
 
     public interface RetrofitConfiguration {
         void configRetrofit(Context context, Retrofit.Builder builder);
@@ -155,6 +190,10 @@ public class ClientModule {
 
     public interface GsonConfiguration {
         void configGson(Context context, GsonBuilder builder);
+    }
+
+    public interface RxCacheConfiguration {
+        void configRxCache(Context context, RxCache.Builder builder);
     }
 
 }

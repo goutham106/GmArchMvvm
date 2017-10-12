@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentManager;
 import com.gm.lifecycle.ConfigLifecycle;
 import com.gm.lifecycle.delegate.AppLifecycles;
 import com.gm.lifecycle.utils.LifecycleUtils;
+import com.gm.repository.utils.RepositoryUtils;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
@@ -65,8 +66,8 @@ public class LifecycleConfiguration implements ConfigLifecycle {
 
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                //This should be the detection of Fragment instead of FragmentLifecycleCallbacks.
-                ((RefWatcher) (LifecycleUtils.INSTANCE.obtainLifecycleComponent(f.getContext()))
+                //Detect Fragment's memory leak.
+                ((RefWatcher) (RepositoryUtils.INSTANCE.obtainRepositoryComponent(f.getContext()))
                         .extras()
                         .get(RefWatcher.class.getName()))
                         .watch(f);

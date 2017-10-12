@@ -17,6 +17,7 @@
 package com.gm.repository;
 
 import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
 
 /**
  * Author     : Gowtham
@@ -27,9 +28,41 @@ import android.arch.persistence.room.RoomDatabase;
  * Data management layer interface
  */
 public interface IRepositoryManager {
-    //Lazy load to get Retrofit Service
+    /**
+     * Get the corresponding Retrofit service based on the incoming Class
+     *
+     * @param service: Retrofit Service Class
+     * @param <T>:     Retrofit Service
+     * @return Retrofit Service
+     */
     <T> T obtainRetrofitService(Class<T> service);
 
-    //Lazy load to get Room database
+    /**
+     *Obtain the corresponding RxCache service according to the incoming Class
+     *
+     * @param cache: Cache Service Class
+     * @param <T>:   Cache Service
+     * @return Cache Service
+     */
+    <T> T obtainCacheService(Class<T> cache);
+
+    /**
+     * Clean up all caches
+     */
+    void clearAllCache();
+
+    /**
+     * Obtain Context(Application)
+     */
+    Context getContext();
+
+    /**
+     * Obtain the corresponding RxCache service according to the incoming Class
+     *
+     * @param database: RoomDatabase Class
+     * @param <DB>:     RoomDatabase
+     * @return RoomDatabase
+     */
     <DB extends RoomDatabase> DB obtainRoomDatabase(Class<DB> database, String dbName);
 }
+

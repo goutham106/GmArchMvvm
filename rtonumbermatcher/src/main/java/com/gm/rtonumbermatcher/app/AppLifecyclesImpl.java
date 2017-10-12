@@ -61,7 +61,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
             //                    });
         }
         //leakCanary memory leak check
-        LifecycleUtils.INSTANCE.obtainLifecycleComponent(application)
+        RepositoryUtils.INSTANCE.obtainRepositoryComponent(application)
                 .extras()
                 .put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
 
