@@ -30,7 +30,7 @@ import com.gm.lifecycle.di.module.LifecycleModule;
  */
 public interface ILifecycle {
     /**
-     * Description:Gets the global LifecycleComponent
+     * Gets the global LifecycleComponent
      *
      * @return LifecycleComponent
      */
@@ -38,7 +38,7 @@ public interface ILifecycle {
 
 
     /**
-     * Description: Get global Lifecycle Module
+     * Get global Lifecycle Module
      *
      * @return LifecycleModule
      */

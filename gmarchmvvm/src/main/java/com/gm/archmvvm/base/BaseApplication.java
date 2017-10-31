@@ -44,10 +44,10 @@ import dagger.android.support.HasSupportFragmentInjector;
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
  * <p>
- * MVVMGm GmApplication
+ * MVVMGm BaseApplication
  */
 
-public class GmApplication extends Application implements IGm, ILifecycle, IRepository, HasActivityInjector, HasSupportFragmentInjector {
+public class BaseApplication extends Application implements IGm, ILifecycle, IRepository, HasActivityInjector, HasSupportFragmentInjector {
     @Inject
     DispatchingAndroidInjector<Activity> mActivityInjector;//Dagger.Android Activity injection
 
@@ -57,10 +57,10 @@ public class GmApplication extends Application implements IGm, ILifecycle, IRepo
     private AppLifecycles mAppDelegate;
 
     /**
-     * This will be called before {@link GmApplication # onCreate}, and you can do some earlier initialization
+     * This will be called before {@link BaseApplication # onCreate}, and you can do some earlier initialization
      * Commonly used in MultiDex and plug-in framework for initialization
      *
-     * @param context
+     * @param context context
      */
     @Override
     protected void attachBaseContext(Context context) {

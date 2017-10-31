@@ -41,11 +41,25 @@ import dagger.Component;
         RepositoryModule.class, LifecycleModule.class,
         GmModule.class, GmConfigModule.class})
 public interface GmComponent {
+    /**
+     * Obtain Application
+     *
+     * @return Application
+     */
     Application application();
 
-    //Image loading manager, policy mode, default using Glide
+    /**
+     * Image loading manager, policy mode, default using Glide
+     *
+     * @return ImageLoader
+     */
     ImageLoader imageLoader();
 
+    /**
+     * Dagger injection
+     *
+     * @param gmInjector GmInjector
+     */
     void inject(GmInjector gmInjector);
 }
 

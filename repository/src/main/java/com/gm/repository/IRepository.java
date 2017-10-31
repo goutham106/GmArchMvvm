@@ -29,14 +29,14 @@ import com.gm.repository.di.module.RepositoryModule;
  */
 public interface IRepository {
     /**
-     * Description: Get global RepositoryComponent
+     * Get global RepositoryComponent
      *
      * @return RepositoryComponent
      */
     RepositoryComponent getRepositoryComponent();
 
     /**
-     * Description: Get the global RepositoryModule
+     * Get the global RepositoryModule
      *
      * @return RepositoryModule
      */

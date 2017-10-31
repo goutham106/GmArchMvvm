@@ -14,4 +14,6 @@
   ~    limitations under the License.
   -->
 
-<manifest package="com.gm.lifecycle" />
+<manifest package="com.gm.lifecycle" >
+
+</manifest>

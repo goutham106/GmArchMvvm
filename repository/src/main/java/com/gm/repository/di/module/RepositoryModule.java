@@ -39,7 +39,6 @@ import retrofit2.Retrofit;
  * <p>
  * Dagger RepositoryModule
  */
-@SuppressWarnings("all")
 @Module
 public class RepositoryModule {
     private Application mApplication;
@@ -52,7 +51,7 @@ public class RepositoryModule {
     @Provides
     IRepositoryManager provideRepositoryManager(Lazy<Retrofit> retrofit, Lazy<RxCache> rxCache,
                                                 Cache.Factory cacheFactory,
-                                                DBModule.RoomConfiguration roomConfiguration) {
+                                                DatabaseModule.RoomConfiguration roomConfiguration) {
         return new RepositoryManager(mApplication, retrofit, rxCache, cacheFactory, roomConfiguration);
     }
 

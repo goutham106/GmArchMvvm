@@ -16,11 +16,18 @@
 
 package com.gm.archmvvm.base;
 
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.ViewModelProvider;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.gm.archmvvm.mvvm.IViewModel;
 import com.gm.lifecycle.delegate.IActivity;
+
+import javax.inject.Inject;
 
 /**
  * Author     : Gowtham
@@ -29,19 +36,37 @@ import com.gm.lifecycle.delegate.IActivity;
  * Created on : 9/18/17.
  * <p>
  * MVVM BaseActivity
+ * If you only use DataBinding, VM generic can pass {@link com.gm.archmvvm.mvvm.BaseViewModel}
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements IActivity {
+public abstract class BaseActivity<DB extends ViewDataBinding, VM extends IViewModel>
+        extends AppCompatActivity implements IActivity {
     protected final String TAG = this.getClass().getName();
+
+    /**
+     * ViewDataBinding
+     */
+    protected DB mBinding;
+
+    /**
+     * MVVM ViewModel ViewModelProvider.Factory
+     */
+    @Inject
+    protected ViewModelProvider.Factory mViewModelFactory;
+    /**
+     * instance in subclass; Automatic destruction
+     */
+    protected VM mViewModel;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            setContentView(initView(savedInstanceState));
-            initData(savedInstanceState);
-        } catch (Exception e) {
-            e.printStackTrace();
+        //Set the DataBinding
+        mBinding = DataBindingUtil.setContentView(this, initView(savedInstanceState));
+        initData(savedInstanceState);
+        if (mViewModel != null) {
+            getLifecycle().addObserver((LifecycleObserver) mViewModel);
         }
     }
 
@@ -56,4 +81,30 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         return true;
     }
 
+    @Override
+    public boolean injectable() {
+        return true;
+    }
+
+    @SuppressWarnings("all")
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        /**
+         * New posture: Save data via ViewModel.
+         *  @see <a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html#viewmodel_vs_savedinstancestate">ViewModel vs SavedInstanceState</a>
+         */
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.mBinding = null;
+        this.mViewModelFactory = null;
+        //Removed LifecycleObserver
+        if (mViewModel != null) {
+            getLifecycle().removeObserver((LifecycleObserver) mViewModel);
+        }
+        this.mViewModel = null;
+    }
 }

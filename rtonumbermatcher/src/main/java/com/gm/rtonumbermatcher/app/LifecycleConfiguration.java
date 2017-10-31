@@ -24,7 +24,6 @@ import android.support.v4.app.FragmentManager;
 
 import com.gm.lifecycle.ConfigLifecycle;
 import com.gm.lifecycle.delegate.AppLifecycles;
-import com.gm.lifecycle.utils.LifecycleUtils;
 import com.gm.repository.utils.RepositoryUtils;
 import com.squareup.leakcanary.RefWatcher;
 

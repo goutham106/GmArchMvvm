@@ -25,9 +25,28 @@ package com.gm.repository.cache;
  * Cache type, different modules have different cache strategies
  */
 public enum CacheType {
-    RETROFIT_SERVICE_CACHE_TYPE,//RepositoryManager's RetrofitService container type
-    CACHE_SERVICE_CACHE_TYPE,//RepositoryManager CacheService container type
-    ROOM_DATABASE_CACHE_TYPE,//RepositoryManager RoomDatabase container type
-    EXTRAS_CACHE_TYPE,//External use type
-    CUSTOM_CACHE_TYPE//Customize the cache type for easy expansion
+    /**
+     * RepositoryManager's RetrofitService container type
+     */
+    RETROFIT_SERVICE_CACHE_TYPE,
+
+    /**
+     * RepositoryManager CacheService container type
+     */
+    CACHE_SERVICE_CACHE_TYPE,
+
+    /**
+     * RepositoryManager RoomDatabase container type
+     */
+    ROOM_DATABASE_CACHE_TYPE,
+
+    /**
+     * External use type
+     */
+    EXTRAS_CACHE_TYPE,
+
+    /**
+     * Customize the cache type for easy expansion
+     */
+    CUSTOM_CACHE_TYPE
 }

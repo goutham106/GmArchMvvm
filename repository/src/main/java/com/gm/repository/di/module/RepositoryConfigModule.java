@@ -28,7 +28,7 @@ import com.gm.repository.http.BaseUrl;
 import com.gm.repository.http.GlobalHttpHandler;
 import com.gm.repository.rxerrorhandler.handler.listener.ResponseErrorListener;
 import com.gm.repository.utils.DataHelper;
-import com.gm.repository.utils.RequestInterceptor;
+import com.gm.repository.http.RequestInterceptor;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class RepositoryConfigModule {
     private ClientModule.GsonConfiguration mGsonConfiguration;
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private RequestInterceptor.Level mPrintHttpLogLevel;
-    private DBModule.RoomConfiguration mRoomConfiguration;
+    private DatabaseModule.RoomConfiguration mRoomConfiguration;
     private Cache.Factory mCacheFactory;
 
 
@@ -167,8 +167,8 @@ public class RepositoryConfigModule {
 
     @Singleton
     @Provides
-    DBModule.RoomConfiguration provideRoomConfiguration() {
-        return mRoomConfiguration == null ? DBModule.RoomConfiguration.EMPTY : mRoomConfiguration;
+    DatabaseModule.RoomConfiguration provideRoomConfiguration() {
+        return mRoomConfiguration == null ? DatabaseModule.RoomConfiguration.EMPTY : mRoomConfiguration;
     }
 
     @Singleton
@@ -205,7 +205,7 @@ public class RepositoryConfigModule {
         private ClientModule.GsonConfiguration gsonConfiguration;
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private RequestInterceptor.Level printHttpLogLevel;
-        private DBModule.RoomConfiguration roomConfiguration;
+        private DatabaseModule.RoomConfiguration roomConfiguration;
         private Cache.Factory cacheFactory;
 
 
@@ -283,7 +283,7 @@ public class RepositoryConfigModule {
             return this;
         }
 
-        public Builder roomConfiguration(DBModule.RoomConfiguration roomConfiguration) {
+        public Builder roomConfiguration(DatabaseModule.RoomConfiguration roomConfiguration) {
             this.roomConfiguration = roomConfiguration;
             return this;
         }

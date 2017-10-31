@@ -33,7 +33,7 @@ import android.view.ViewGroup;
 
 public interface IFragment {
     /**
-     * Description: UI initialization
+     * UI initialization
      *
      * @param inflater           LayoutInflater
      * @param container          ViewGroup
@@ -43,19 +43,19 @@ public interface IFragment {
     View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     /**
-     * Description: Data initialization
+     * Data initialization
      *
      * @param savedInstanceState Bundle
      */
     void initData(Bundle savedInstanceState);
 
     /**
-     * This method is to make external calls to make some of the operation of the fragment, for example, the external activities of the fragment object to perform some of the methods,
-     * It is recommended that there are a number of ways to make external calls, the unified message, through what field, to distinguish between different methods, setData
-     * Method can switch to do different operations, so that you can use a unified entrance to do different things
+     * Activity and Fragment Communication Interface
+     * This method is to make external calls to make Fragment to do some operations, such as external Fragment Fragment object to do some of the implementation of the method,
+     * It is recommended that when there are multiple methods that require external calls, {@link android.os.Message}, through what field, to distinguish between different methods,
+     * In this method can switch do different operations, so that you can use a unified entrance to do different things
      * <p>
-     * <p>
-     * New posture: You can use the Activity ViewModel to share data to include the Fragment, with LiveData easy to use burst.
+     * New posture: You can use the Activity ViewModel shared data to include the Fragment, with LiveData easy to use burst.
      *
      * @param data Object
      * @see <a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html#sharing_data_between_fragments">Sharing Data Between Fragments</a>
@@ -63,7 +63,7 @@ public interface IFragment {
     void setData(Object data);
 
     /**
-     * Description: Whether Fragment is dependent on injection
+     * Fragment Whether to rely on the injection, if not, rewrite the method, return false
      *
      * @return true: Dependency injection; false: No dependency injection
      */
@@ -71,7 +71,7 @@ public interface IFragment {
 
 
     /**
-     * Description: Whether to use EventBus.
+     * Whether to use EventBus.
      * Default use (true)
      *
      * @return boolean

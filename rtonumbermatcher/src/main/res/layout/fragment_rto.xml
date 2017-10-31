@@ -114,7 +114,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                app:layoutManager="LinearLayoutManager"
                 app:visibleGone="@{viewModel.mStatus != Status.ERROR}"
                 tools:listitem="@layout/item_text" />
         </LinearLayout>

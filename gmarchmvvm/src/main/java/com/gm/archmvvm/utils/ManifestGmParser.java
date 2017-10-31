@@ -32,7 +32,6 @@ import java.util.List;
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
  */
-@SuppressWarnings("all")
 public final class ManifestGmParser {
     private static final String MODULE_VALUE = "ConfigArms";
 
@@ -53,9 +52,7 @@ public final class ManifestGmParser {
         Object gms;
         try {
             gms = clazz.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
         }
 
@@ -73,7 +70,7 @@ public final class ManifestGmParser {
             if (appInfo.metaData != null) {
                 for (String key : appInfo.metaData.keySet()) {
                     if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
-                        Log.d("ManifestGmParser ---> ",
+                        Log.d("Gm ---> ",
                                 String.format("Find ConfigArms in [%s]", key));
                         configGms.add(parseModule(key));
                     }

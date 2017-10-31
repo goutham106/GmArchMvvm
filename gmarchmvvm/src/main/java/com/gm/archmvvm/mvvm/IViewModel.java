@@ -24,5 +24,8 @@ package com.gm.archmvvm.mvvm;
  */
 
 public interface IViewModel {
+    /**
+     * Initialize the operation
+     */
     void onStart();
 }

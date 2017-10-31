@@ -31,8 +31,8 @@ public interface IRepositoryManager {
     /**
      * Get the corresponding Retrofit service based on the incoming Class
      *
-     * @param service: Retrofit Service Class
-     * @param <T>:     Retrofit Service
+     * @param service Retrofit Service Class
+     * @param <T>     Retrofit Service
      * @return Retrofit Service
      */
     <T> T obtainRetrofitService(Class<T> service);
@@ -40,8 +40,8 @@ public interface IRepositoryManager {
     /**
      *Obtain the corresponding RxCache service according to the incoming Class
      *
-     * @param cache: Cache Service Class
-     * @param <T>:   Cache Service
+     * @param cache Cache Service Class
+     * @param <T>   Cache Service
      * @return Cache Service
      */
     <T> T obtainCacheService(Class<T> cache);
@@ -53,14 +53,16 @@ public interface IRepositoryManager {
 
     /**
      * Obtain Context(Application)
+     * @return context
      */
     Context getContext();
 
     /**
      * Obtain the corresponding RxCache service according to the incoming Class
      *
-     * @param database: RoomDatabase Class
-     * @param <DB>:     RoomDatabase
+     * @param database RoomDatabase Class
+     * @param <DB>     RoomDatabase
+     * @param dbName RoomDatabase Name
      * @return RoomDatabase
      */
     <DB extends RoomDatabase> DB obtainRoomDatabase(Class<DB> database, String dbName);

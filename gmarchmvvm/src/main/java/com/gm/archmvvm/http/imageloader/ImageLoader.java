@@ -40,10 +40,24 @@ public final class ImageLoader {
     }
 
 
+    /**
+     * Load the picture
+     *
+     * @param context Context
+     * @param config  ImageConfig
+     * @param <T>     ImageConfig
+     */
     public <T extends BaseImageConfig> void loadImage(Context context, T config) {
         mStrategy.loadImage(context, config);
     }
 
+    /**
+     * Stop loading
+     *
+     * @param context Context
+     * @param config  ImageConfig
+     * @param <T>     ImageConfig
+     */
     public <T extends BaseImageConfig> void clear(Context context, T config) {
         mStrategy.clear(context, config);
     }

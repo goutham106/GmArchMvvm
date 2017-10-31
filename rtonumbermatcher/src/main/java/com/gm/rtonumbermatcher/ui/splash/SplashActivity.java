@@ -21,12 +21,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.gm.archmvvm.base.GmActivity;
+import com.gm.archmvvm.base.BaseActivity;
 import com.gm.rtonumbermatcher.R;
 import com.gm.rtonumbermatcher.databinding.ActivitySplashBinding;
 import com.gm.rtonumbermatcher.ui.main.MainActivity;
 
-public class SplashActivity extends GmActivity<ActivitySplashBinding, SplashViewModel> {
+public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
     @Override
     public int initView(Bundle savedInstanceState) {
 

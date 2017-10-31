@@ -16,6 +16,7 @@
 
 package com.gm.lifecycle.delegate;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
 
@@ -31,18 +32,42 @@ import android.os.Parcelable;
 public interface ActivityDelegate extends Parcelable {
     String ACTIVITY_DELEGATE = "activity_delegate";
 
-
+    /**
+     * proxy {@link Activity#onCreate(Bundle)}
+     *
+     * @param savedInstanceState Data Recovery
+     */
     void onCreate(Bundle savedInstanceState);
 
+    /**
+     * proxy {@link Activity#onStart()}
+     */
     void onStart();
 
+    /**
+     * proxy {@link Activity#onResume()}
+     */
     void onResume();
 
+    /**
+     * proxy {@link Activity#onPause()}
+     */
     void onPause();
 
+    /**
+     * proxy {@link Activity#onStop()}
+     */
     void onStop();
 
+    /**
+     * proxy {@link Activity#onSaveInstanceState(Bundle)}
+     *
+     * @param outState Data is saved
+     */
     void onSaveInstanceState(Bundle outState);
 
+    /**
+     * proxy {@link Activity#onDestroy()}
+     */
     void onDestroy();
 }

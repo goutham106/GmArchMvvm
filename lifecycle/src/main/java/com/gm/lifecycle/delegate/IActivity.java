@@ -30,7 +30,7 @@ import android.os.Bundle;
 
 public interface IActivity {
     /**
-     * Description: UI initialization
+     * UI initialization
      *
      * @param savedInstanceState Bundle
      * @return int
@@ -38,14 +38,15 @@ public interface IActivity {
     int initView(Bundle savedInstanceState);
 
     /**
-     * Description: Data initialization
+     * Data initialization
      *
      * @param savedInstanceState Bundle
      */
     void initData(Bundle savedInstanceState);
 
     /**
-     * Description: Whether to use EventBus
+     * Whether to use EventBus
+     * {@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
      * Default use (true)
      *
      * @return boolean
@@ -59,4 +60,11 @@ public interface IActivity {
      * @return boolean
      */
     boolean useFragment();
+
+    /**
+     * Activity is dependent on the injection, if not, then rewrite this method, return false
+     *
+     * @return true: dependency injection; false: no dependency injection
+     */
+    boolean injectable();
 }

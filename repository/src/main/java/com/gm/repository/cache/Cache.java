@@ -30,13 +30,16 @@ import android.support.annotation.Nullable;
 public interface Cache<K, V> {
     interface Factory {
 
+        /**
+         * Default cache size
+         */
         int DEFAULT_CACHE_SIZE = 100;
 
         /**
          * Returns a new cache
          *
          * @param type The Id of the module type in the frame
-         * @return
+         * @return Cache
          */
         @NonNull
         Cache build(CacheType type);
@@ -45,14 +48,14 @@ public interface Cache<K, V> {
     /**
      * Returns the total size of the current cache
      *
-     * @return
+     * @return The total size of the current cache has been occupied
      */
     int size();
 
     /**
      * Returns the maximum size allowed by the current cache
      *
-     * @return
+     * @return The maximum size that the current cache can allow
      */
     int getMaxSize();
 
@@ -60,7 +63,7 @@ public interface Cache<K, V> {
      * Return this {@code key} in the cache corresponding to the {@code value}, if the return {@code null} that the {@code key} does not correspond to the {@code value}
      *
      * @param key
-     * @return
+     * @return Value
      */
     @Nullable
     V get(K key);
@@ -69,9 +72,9 @@ public interface Cache<K, V> {
      * Add {@code key} and {@code value} to the cache as an entry, and if this {@code key} already has a corresponding {@code value} in the cache,
      * This {@code value} is replaced and returned by the new {@code value}, if it is a new entry for {@code null}
      *
-     * @param key
-     * @param value
-     * @return
+     * @param key Key
+     * @param value new value
+     * @return old value
      */
     @Nullable
     V put(K key, V value);
@@ -81,7 +84,7 @@ public interface Cache<K, V> {
      * If the return is {@code null} it is possible because the {@code key} corresponds to the value of {@code null} or the entry does not exist
      *
      * @param key
-     * @return
+     * @return Value
      */
     @Nullable
     V remove(K key);
@@ -90,7 +93,7 @@ public interface Cache<K, V> {
      * If the {@code key} has a corresponding value in the cache and is not {@code null}, it returns {@code true}
      *
      * @param key
-     * @return
+     * @return How does the existence of the cache return true?
      */
     boolean containsKey(K key);
 

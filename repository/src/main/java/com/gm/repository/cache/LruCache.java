@@ -175,7 +175,7 @@ public class LruCache<K, V> implements Cache<K, V> {
     /**
      * When the specified size is less than the total size of the current cache, it will begin to clear the most recently used entries in the cache
      *
-     * @param size
+     * @param size Cache size
      */
     protected synchronized void trimToSize(int size) {
         Map.Entry<K, V> last;

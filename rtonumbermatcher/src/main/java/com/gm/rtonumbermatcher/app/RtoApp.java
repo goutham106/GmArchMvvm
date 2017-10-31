@@ -16,7 +16,7 @@
 
 package com.gm.rtonumbermatcher.app;
 
-import com.gm.archmvvm.base.GmApplication;
+import com.gm.archmvvm.base.BaseApplication;
 import com.gm.rtonumbermatcher.di.component.AppComponent;
 import com.gm.rtonumbermatcher.di.component.DaggerAppComponent;
 import com.gm.rtonumbermatcher.util.ToastUtils;
@@ -29,7 +29,7 @@ import com.gm.rtonumbermatcher.util.Utils;
  * Created on : 9/26/17.
  */
 
-public class RtoApp extends GmApplication {
+public class RtoApp extends BaseApplication {
 
     private AppComponent mAppComponent;
 

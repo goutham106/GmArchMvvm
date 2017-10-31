@@ -72,7 +72,7 @@ public class OkHttpStreamFetcher implements DataFetcher<InputStream> {
         call = client.newCall(request);
         call.enqueue(new okhttp3.Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 if (Log.isLoggable(TAG, Log.DEBUG)) {
                     Log.d(TAG, "OkHttp failed to obtain result", e);
                 }

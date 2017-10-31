@@ -69,9 +69,15 @@ public class ActivityDelegateImpl implements ActivityDelegate, HasSupportFragmen
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if (iActivity.useEventBus())//If you want to use eventbus please return this method to true
-            EventBus.getDefault().register(mActivity);//Register to the event main line
-        AndroidInjection.inject(mActivity);//Dagger.Android depends on injection
+        //If you want to use eventbus please return this method to true
+        if (iActivity.useEventBus()) {
+            //Register to the event main line
+            EventBus.getDefault().register(mActivity);
+        }
+        //Dagger.Android depends on injection
+        if (iActivity.injectable()) {
+            AndroidInjection.inject(mActivity);
+        }
     }
 
     @Override
@@ -101,7 +107,8 @@ public class ActivityDelegateImpl implements ActivityDelegate, HasSupportFragmen
 
     @Override
     public void onDestroy() {
-        if (iActivity.useEventBus())//If you want to use eventbus please return this method to true
+        //If you want to use eventbus please return this method to true
+        if (iActivity.useEventBus())
             EventBus.getDefault().unregister(mActivity);
         this.iActivity = null;
         this.mActivity = null;

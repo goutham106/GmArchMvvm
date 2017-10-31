@@ -36,13 +36,28 @@ import com.gm.repository.utils.Preconditions;
  */
 
 public enum GmUtils {
+    /**
+     * Singleton enumeration implementation
+     */
     INSTANCE;
 
+    /**
+     * Get {@link GmComponent}, using Dagger's external exposure method
+     *
+     * @param context Context
+     * @return GmComponent     
+     */
     public GmComponent obtainGmComponent(Context context) {
         return obtainGmComponent((Application) context.getApplicationContext());
 
     }
 
+    /**
+     * Get {@link GmComponent}, using Dagger's external exposure method
+     *
+     * @param application Application
+     * @return GmComponent
+     */
     public GmComponent obtainGmComponent(Application application) {
         Preconditions.checkState(application instanceof IGm, "Application does not implements IGm");
         return ((IGm) application).getGmComponent();

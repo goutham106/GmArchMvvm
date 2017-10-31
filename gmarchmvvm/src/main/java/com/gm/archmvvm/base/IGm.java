@@ -31,7 +31,7 @@ import com.gm.archmvvm.di.module.GmModule;
 
 public interface IGm {
     /**
-     * Description: Get global GmComponent
+     * Get global GmComponent
      *
      * @return GmComponent
      */
@@ -39,7 +39,7 @@ public interface IGm {
 
 
     /**
-     * Description: Get global GmModule
+     * Get global GmModule
      *
      * @return GmModule
      */

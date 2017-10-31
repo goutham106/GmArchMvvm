@@ -26,6 +26,10 @@ import com.gm.archmvvm.http.imageloader.BaseImageConfig;
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
+ * <p>
+ * Here to store the image request configuration information, you can always expand the field, if the external call to make the picture load frame
+ * Do some operations, such as clearing the cache or switch cache strategy, you can define a type of int variables, according to the internal switch (int) to do different operations
+ * Other operations are the same
  */
 
 public class ImageConfigImpl extends BaseImageConfig {

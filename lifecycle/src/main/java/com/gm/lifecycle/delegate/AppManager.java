@@ -53,18 +53,27 @@ import timber.log.Timber;
 @Singleton
 public final class AppManager {
     public static final String APPMANAGER_MESSAGE = "appmanager_message";
-    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";//true Do not need to join the Activity container for unified management, and vice versa
+    /**
+     * true Do not need to join the Activity container for unified management, and vice versa
+     */
+    public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list";
     public static final int START_ACTIVITY = 5000;
     public static final int SHOW_SNACKBAR = 5001;
     public static final int KILL_ALL = 5002;
     public static final int APP_EXIT = 5003;
     protected final String TAG = this.getClass().getSimpleName();
-    //Manage all activities
+    /**
+     * Manage all activities
+     */
     public List<Activity> mActivityList;
     private Application mApplication;
-    //The current activity in the foreground
+    /**
+     * The current activity in the foreground
+     */
     private Activity mCurrentActivity;
-    //Provides an onReceive method for external extension AppManager
+    /**
+     * Provides an onReceive method for external extension AppManager
+     */
     private HandleListener mHandleListener;
 
     @Inject
@@ -76,7 +85,7 @@ public final class AppManager {
     /**
      * Use this method to remotely control AppManager,Make {@link #onReceive (Message)} execute the corresponding method
      *
-     * @param msg
+     * @param msg Message news
      */
     public static void post(Message msg) {
         EventBus.getDefault().post(msg, APPMANAGER_MESSAGE);
@@ -89,13 +98,15 @@ public final class AppManager {
     public void onReceive(Message message) {
         switch (message.what) {
             case START_ACTIVITY:
-                if (message.obj == null)
+                if (message.obj == null) {
                     break;
+                }
                 dispatchStart(message);
                 break;
             case SHOW_SNACKBAR:
-                if (message.obj == null)
+                if (message.obj == null) {
                     break;
+                }
                 showSnackbar((String) message.obj, message.arg1 != 0);
                 break;
             case KILL_ALL:
@@ -114,10 +125,11 @@ public final class AppManager {
     }
 
     private void dispatchStart(Message message) {
-        if (message.obj instanceof Intent)
+        if (message.obj instanceof Intent) {
             startActivity((Intent) message.obj);
-        else if (message.obj instanceof Class)
+        } else if (message.obj instanceof Class) {
             startActivity((Class) message.obj);
+        }
     }
 
     public HandleListener getHandleListener() {
@@ -126,8 +138,8 @@ public final class AppManager {
 
     /**
      * The method @{@link #onReceive} (remote remote control AppManager) provided to the external extension AppManager
-     *      * Suggested in {@link com.gm.lifecycle.ConfigLifecycle # injectAppLifecycle (Context, List)}
-     *  Use {@link AppLifecycles # onCreate (Application)} in the App initialization, use this method passed custom {@link HandleListener}
+     * Suggested in {@link com.gm.lifecycle.ConfigLifecycle # injectAppLifecycle (Context, List)}
+     * Use {@link AppLifecycles # onCreate (Application)} in the App initialization, use this method passed custom {@link HandleListener}
      *
      * @param handleListener
      */
@@ -394,8 +406,9 @@ public final class AppManager {
         while (iterator.hasNext()) {
             Activity next = iterator.next();
 
-            if (excludeList.contains(next.getClass()))
+            if (excludeList.contains(next.getClass())) {
                 continue;
+            }
 
             iterator.remove();
             next.finish();
@@ -413,8 +426,9 @@ public final class AppManager {
         while (iterator.hasNext()) {
             Activity next = iterator.next();
 
-            if (excludeList.contains(next.getClass().getName()))
+            if (excludeList.contains(next.getClass().getName())) {
                 continue;
+            }
 
             iterator.remove();
             next.finish();
@@ -428,10 +442,7 @@ public final class AppManager {
     public void appExit() {
         try {
             killAll();
-            release();
-            ActivityManager activityMgr =
-                    (ActivityManager) mApplication.getSystemService(Context.ACTIVITY_SERVICE);
-            activityMgr.killBackgroundProcesses(mApplication.getPackageName());
+            android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();
@@ -439,6 +450,12 @@ public final class AppManager {
     }
 
     public interface HandleListener {
+        /**
+         * Extended AppManager remote control function
+         *
+         * @param appManager AppManager
+         * @param message    Message
+         */
         void handleMessage(AppManager appManager, Message message);
     }
 }

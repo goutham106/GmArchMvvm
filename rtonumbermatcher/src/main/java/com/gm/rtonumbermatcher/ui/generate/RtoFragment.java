@@ -24,7 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gm.archmvvm.base.GmFragment;
+import com.gm.archmvvm.base.BaseFragment;
 import com.gm.rtonumbermatcher.R;
 import com.gm.rtonumbermatcher.databinding.FragmentRtoBinding;
 import com.gm.rtonumbermatcher.ui.generate.adapter.RtoAdapter;
@@ -33,13 +33,14 @@ import com.gm.rtonumbermatcher.util.CustomAnimation;
 import com.gm.rtonumbermatcher.util.DebouncingOnClickListener;
 import com.gm.rtonumbermatcher.util.KeyboardUtils;
 import com.gm.rtonumbermatcher.util.ToastUtils;
+import com.gm.rtonumbermatcher.util.VegaLayoutManager;
 
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
-public class RtoFragment extends GmFragment<FragmentRtoBinding, RtoViewModel> {
+public class RtoFragment extends BaseFragment<FragmentRtoBinding, RtoViewModel> {
 
     @Inject
     MainViewModel mainViewModel;
@@ -63,11 +64,11 @@ public class RtoFragment extends GmFragment<FragmentRtoBinding, RtoViewModel> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mBinding.setViewModel(mViewModel);
-        mBinding.txtResponse.setHasFixedSize(true);
+//        mBinding.txtResponse.setHasFixedSize(true);
+        mBinding.txtResponse.setLayoutManager(new VegaLayoutManager());
         mAdapter = new RtoAdapter(R.layout.item_text, null);
-        mAdapter.openLoadAnimation(new CustomAnimation());
-        mAdapter.isFirstOnly(false);
+//        mAdapter.openLoadAnimation(new CustomAnimation());
+//        mAdapter.isFirstOnly(false);
         mBinding.txtResponse.setAdapter(mAdapter);
         emptyWindow();
 

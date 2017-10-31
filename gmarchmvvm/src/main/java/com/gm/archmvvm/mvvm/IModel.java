@@ -24,5 +24,8 @@ package com.gm.archmvvm.mvvm;
  */
 
 public interface IModel {
+    /**
+     * To carry out the release of resources
+     */
     void onDestroy();
 }

@@ -42,18 +42,30 @@ import com.gm.repository.di.module.RepositoryModule;
 
 public class AppDelegate implements AppLifecycles, ILifecycle, IRepository, IGm {
     private Application mApplication;
-    private RepositoryInjector mRepositoryInjector;//Repository
-    private LifecycleInjector mLifecycleInjector;//Lifecycle
-    private GmInjector mGmInjector;//Arms
+    /**
+     * {@link RepositoryInjector}
+     */
+    private RepositoryInjector mRepositoryInjector;
+    /**
+     * {@link LifecycleInjector}
+     */
+    private LifecycleInjector mLifecycleInjector;
+    /**
+     * {@link GmInjector}
+     */
+    private GmInjector mGmInjector;
 
 
     public AppDelegate(Context context) {
-        if (mRepositoryInjector == null)
+        if (mRepositoryInjector == null) {
             mRepositoryInjector = new RepositoryInjector(context);
-        if (mLifecycleInjector == null)
+        }
+        if (mLifecycleInjector == null) {
             mLifecycleInjector = new LifecycleInjector(context);
-        if (mGmInjector == null)
+        }
+        if (mGmInjector == null) {
             mGmInjector = new GmInjector(context);
+        }
     }
 
     @Override

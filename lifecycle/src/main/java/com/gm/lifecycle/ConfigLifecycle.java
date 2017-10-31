@@ -34,6 +34,9 @@ import java.util.List;
 public interface ConfigLifecycle {
     /**
      * Use {@link AppLifecycles} to inject some operations in the application's lifecycle
+     *
+     * @param context:    Context
+     * @param lifecycles: List<AppLifecycles>
      */
     void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles);
 

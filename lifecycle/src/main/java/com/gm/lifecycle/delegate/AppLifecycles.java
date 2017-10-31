@@ -29,9 +29,25 @@ import android.content.Context;
  */
 
 public interface AppLifecycles {
-    void attachBaseContext(Context base);
 
+    /**
+     * proxy {@link Application#attachBaseContext(Context)}
+     *
+     * @param context Context
+     */
+    void attachBaseContext(Context context);
+
+    /**
+     * proxy {@link Application#onCreate()}
+     *
+     * @param application Application
+     */
     void onCreate(Application application);
 
+    /**
+     * proxy {@link Application#onTerminate()}
+     *
+     * @param application Application
+     */
     void onTerminate(Application application);
 }

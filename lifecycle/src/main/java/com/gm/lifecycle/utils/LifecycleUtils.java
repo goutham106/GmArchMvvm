@@ -33,12 +33,27 @@ import com.gm.lifecycle.di.component.LifecycleComponent;
  */
 
 public enum LifecycleUtils {
+    /**
+     * Enumeration of singleton mode implementation
+     */
     INSTANCE;
 
+    /**
+     * Get {@link LifecycleComponent}, using Dagger's external exposure method
+     *
+     * @param context Context
+     * @return LifecycleComponent
+     */
     public LifecycleComponent obtainLifecycleComponent(Context context) {
         return obtainLifecycleComponent((Application) context.getApplicationContext());
     }
 
+    /**
+     * Get {@link LifecycleComponent}, using Dagger's external exposure method
+     *
+     * @param application Application
+     * @return LifecycleComponent
+     */
     public LifecycleComponent obtainLifecycleComponent(Application application) {
         Preconditions.checkState(application instanceof ILifecycle,
                 "%s does not implements ILifecycle", application.getClass().getName());

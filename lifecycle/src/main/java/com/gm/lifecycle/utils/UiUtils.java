@@ -24,10 +24,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gm.lifecycle.delegate.AppManager;
@@ -56,6 +61,24 @@ public class UiUtils {
         throw new IllegalStateException("you can't instantiate me!");
     }
 
+    /**
+     * 设置hint大小
+     *
+     * @param size
+     * @param v
+     * @param res
+     */
+    public static void setViewHintSize(Context context, int size, TextView v, int res) {
+        SpannableString ss = new SpannableString(getResources(context).getString(
+                res));
+        // 新建一个属性对象,设置文字的大小
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(size, true);
+        // 附加属性到文本
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // 设置hint,一定要进行转换,否则属性会消失
+        v.setHint(new SpannedString(ss));
+    }
 
     /**
      * dip to pix
@@ -94,23 +117,25 @@ public class UiUtils {
     /**
      * Get the dimensions from the dimensions
      *
-     * @param homePicHeight
+     * @param context
+     * @param id
      * @return
      */
 
-    public static int getDimens(Context context, int homePicHeight) {
-        return (int) getResources(context).getDimension(homePicHeight);
+    public static int getDimens(Context context, int id) {
+        return (int) getResources(context).getDimension(id);
     }
 
     /**
      * Get the dimensions from the dimensions
      *
-     * @param
+     * @param context
+     * @param dimenName
      * @return
      */
 
-    public static float getDimens(Context context, String dimenNmae) {
-        return getResources(context).getDimension(getResources(context).getIdentifier(dimenNmae, "dimen", context.getPackageName()));
+    public static float getDimens(Context context, String dimenName) {
+        return getResources(context).getDimension(getResources(context).getIdentifier(dimenName, "dimen", context.getPackageName()));
     }
 
     /**
@@ -197,7 +222,7 @@ public class UiUtils {
     }
 
     /**
-     * With snackbar
+     * Use {@link Snackbar} to display text messages
      *
      * @param text
      */
@@ -210,7 +235,7 @@ public class UiUtils {
     }
 
     /**
-     * Use snackbar for a long time
+     * Use {@link Snackbar} to display text messages for a long time
      *
      * @param text
      */
@@ -230,11 +255,37 @@ public class UiUtils {
      * @return
      */
     public static Drawable getDrawablebyResource(Context context, int rID) {
-        return getResources(context).getDrawable(rID);
+        return getResources(context).getDrawable(rID,null);
+    }
+
+
+    /**
+     * Jump interface 1, via {@link AppManager # startActivity (Class)}
+     *
+     * @param
+     * @param homeActivityClass
+     */
+    public static void startActivity(Class activityClass) {
+        Message message = new Message();
+        message.what = START_ACTIVITY;
+        message.obj = activityClass;
+        AppManager.post(message);
     }
 
     /**
-     * Jump interface
+     * Jump interface 2, via {@link AppManager # startActivity (Class)}
+     *
+     * @param
+     */
+    public static void startActivity(Intent content) {
+        Message message = new Message();
+        message.what = START_ACTIVITY;
+        message.obj = content;
+        AppManager.post(message);
+    }
+
+    /**
+     * Jump interface 3
      *
      * @param activity
      * @param homeActivityClass
@@ -248,38 +299,9 @@ public class UiUtils {
      * Jump interface
      *
      * @param
-     * @param homeActivityClass
-     */
-    public static void startActivity(Class homeActivityClass) {
-        Message message = new Message();
-        message.what = START_ACTIVITY;
-        message.obj = homeActivityClass;
-        AppManager.post(message);
-    }
-
-    /**
-     * Jump interface
-     *
-     * @param
-     */
-    public static void startActivity(Intent content) {
-        Message message = new Message();
-        message.what = START_ACTIVITY;
-        message.obj = content;
-        AppManager.post(message);
-    }
-
-    /**
-     * Jump interface
-     *
-     * @param
      */
     public static void startActivity(Activity activity, Intent intent) {
         activity.startActivity(intent);
-    }
-
-    public static int getLayoutId(Context context, String layoutName) {
-        return getResources(context).getIdentifier(layoutName, "layout", context.getPackageName());
     }
 
     /**
@@ -305,7 +327,7 @@ public class UiUtils {
      * Get the color
      */
     public static int getColor(Context context, int rid) {
-        return getResources(context).getColor(rid);
+        return getResources(context).getColor(rid,null);
     }
 
     /**
@@ -390,13 +412,18 @@ public class UiUtils {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-
+    /**
+     * Remote control {@link AppManager # killAll ()}
+     */
     public static void killAll() {
         Message message = new Message();
         message.what = KILL_ALL;
         AppManager.post(message);
     }
 
+    /**
+     * Remote control {@link AppManager # appExit ()}
+     */
     public static void exitApp() {
         Message message = new Message();
         message.what = APP_EXIT;

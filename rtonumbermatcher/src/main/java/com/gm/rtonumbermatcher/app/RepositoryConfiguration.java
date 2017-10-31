@@ -22,7 +22,7 @@ import com.gm.repository.ConfigRepository;
 import com.gm.repository.cache.Cache;
 import com.gm.repository.cache.LruCache;
 import com.gm.repository.di.module.RepositoryConfigModule;
-import com.gm.repository.utils.RequestInterceptor;
+import com.gm.repository.http.RequestInterceptor;
 import com.gm.rtonumbermatcher.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
@@ -54,8 +54,10 @@ public class RepositoryConfiguration implements ConfigRepository {
                 })
                 //Here you can customize the configuration of Retrofit parameters, and even you can replace the system configuration okhttp object
                 .retrofitConfiguration((context1, retrofitBuilder) -> {
-                    // Such as the use of fastjson alternative gson
-                    // retrofitBuilder.addConverterFactory(FastJsonConverterFactory.create());
+                     /* Such as the use of fastjson alternative gson
+                     retrofitBuilder.addConverterFactory(FastJsonConverterFactory.create());*/
+                    /* Adapt LiveData
+                    retrofitBuilder.addCallAdapterFactory(new LiveDataCallAdapterFactory());*/
                 })
                 //Here you can customize the configuration Okhttp parameters
                 .okhttpConfiguration((context1, okhttpBuilder) -> {

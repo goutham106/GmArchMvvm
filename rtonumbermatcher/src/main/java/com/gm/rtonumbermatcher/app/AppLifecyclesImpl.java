@@ -18,6 +18,7 @@ package com.gm.rtonumbermatcher.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.gm.lifecycle.delegate.AppLifecycles;
 import com.gm.lifecycle.utils.LifecycleUtils;
@@ -40,7 +41,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
 
     @Override
     public void attachBaseContext(Context base) {
-//         MultiDex.install(base);  //Here is the first implementation than onCreate,Commonly used in MultiDex initialization, plug-in framework for initialization
+         MultiDex.install(base);  //Here is the first implementation than onCreate,Commonly used in MultiDex initialization, plug-in framework for initialization
     }
 
     @Override

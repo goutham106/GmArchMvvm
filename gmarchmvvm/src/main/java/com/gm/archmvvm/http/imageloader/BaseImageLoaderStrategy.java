@@ -28,7 +28,19 @@ import android.content.Context;
  */
 
 public interface BaseImageLoaderStrategy<T extends BaseImageConfig> {
+    /**
+     * Load the picture
+     *
+     * @param context Context
+     * @param config  ImageConfig
+     */
     void loadImage(Context context, T config);
 
+    /**
+     * Stop loading
+     *
+     * @param context Context
+     * @param config  ImageConfig
+     */
     void clear(Context context, T config);
 }

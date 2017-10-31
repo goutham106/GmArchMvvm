@@ -42,20 +42,46 @@ import okhttp3.OkHttpClient;
 @Singleton
 @Component(modules = {RepositoryModule.class, ClientModule.class, RepositoryConfigModule.class})
 public interface RepositoryComponent {
-    //Used to manage the network request layer and the database layer
+
+    /**
+     * Used to manage the network request layer and the database layer
+     *
+     * @return RepositoryManager
+     */
     IRepositoryManager repositoryManager();
 
-    //Rxjava error handling management class
+    /**
+     * Rxjava error handling management class
+     *
+     * @return RxErrorHandler
+     */
     RxErrorHandler rxErrorHandler();
 
-    //Provide OKHttpClient
+    /**
+     * Provide OKHttpClient
+     *
+     * @return OkHttpClient
+     */
     OkHttpClient okHttpClient();
 
-    //Provide cache file
+    /**
+     * Provide cache file
+     *
+     * @return File
+     */
     File cacheFile();
 
-    //Provide a cache for external use, do not store large amounts of data
+    /**
+     * Provide a cache for external use, do not store large amounts of data
+     *
+     * @return Cache
+     */
     Cache<String, Object> extras();
 
+    /**
+     * Dagger injection
+     *
+     * @param repositoryInjector RepositoryInjector
+     */
     void inject(RepositoryInjector repositoryInjector);
 }

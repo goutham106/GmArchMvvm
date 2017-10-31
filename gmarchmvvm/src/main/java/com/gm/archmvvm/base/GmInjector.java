@@ -25,6 +25,7 @@ import com.gm.archmvvm.di.component.DaggerGmComponent;
 import com.gm.archmvvm.di.component.GmComponent;
 import com.gm.archmvvm.di.module.GmConfigModule;
 import com.gm.archmvvm.di.module.GmModule;
+import com.gm.archmvvm.http.imageloader.glide.GlideGm;
 import com.gm.archmvvm.http.imageloader.glide.ImageConfigImpl;
 import com.gm.archmvvm.utils.GmUtils;
 import com.gm.archmvvm.utils.ManifestGmParser;
@@ -57,8 +58,9 @@ public class GmInjector implements IGm {
     public void onCreate(Application application) {
         this.mApplication = application;
 
-        if (mGmModule == null)
+        if (mGmModule == null) {
             mGmModule = new GmModule(mApplication);
+        }
         mGmComponent = DaggerGmComponent.builder()
                 // .lifecycleModule(((ILifecycle) mApplication).getLifecycleModule())
                 // .repositoryModule(((IRepository) mApplication).getRepositoryModule())
@@ -73,8 +75,9 @@ public class GmInjector implements IGm {
 
 
     public void onTerminate(Application application) {
-        if (mComponentCallback != null)
+        if (mComponentCallback != null) {
             mApplication.unregisterComponentCallbacks(mComponentCallback);
+        }
         this.mComponentCallback = null;
     }
 
@@ -88,8 +91,9 @@ public class GmInjector implements IGm {
     private GmConfigModule getGmConfigModule(Context context, List<ConfigGm> configGms) {
         GmConfigModule.Builder builder = GmConfigModule.builder();
         // Register the Gm custom configuration
-        for (ConfigGm module : configGms)
+        for (ConfigGm module : configGms) {
             module.applyOptions(context, builder);
+        }
         return builder.build();
     }
 
@@ -119,7 +123,14 @@ public class GmInjector implements IGm {
 
         @Override
         public void onTrimMemory(int level) {
-
+            //When the App is replaced to the background, clean the image request frame memory cache
+            if (level == TRIM_MEMORY_UI_HIDDEN) {
+                GmUtils.INSTANCE.obtainGmComponent(mApplication)
+                        .imageLoader()
+                        .clear(mApplication, ImageConfigImpl.builder().isClearMemory(true).build());
+            }
+            //To Glide to handle memory
+            GlideGm.get(mApplication).trimMemory(level);
         }
 
         @Override

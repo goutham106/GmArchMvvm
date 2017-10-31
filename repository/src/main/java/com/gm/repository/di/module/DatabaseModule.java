@@ -30,7 +30,7 @@ import dagger.Module;
  * Dagger RoomDatabase Module
  */
 @Module
-public class DBModule {
+public class DatabaseModule {
 
     public interface RoomConfiguration<DB extends RoomDatabase> {
         RoomConfiguration EMPTY = new RoomConfiguration() {
@@ -40,6 +40,12 @@ public class DBModule {
             }
         };
 
+        /**
+         * Provide interface, custom configuration RoomDatabase
+         *
+         * @param context Context
+         * @param builder RoomDatabase.Builder
+         */
         void configRoom(Context context, RoomDatabase.Builder<DB> builder);
     }
 }

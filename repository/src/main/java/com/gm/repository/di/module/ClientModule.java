@@ -25,7 +25,7 @@ import com.gm.repository.http.GlobalHttpHandler;
 import com.gm.repository.rxerrorhandler.core.RxErrorHandler;
 import com.gm.repository.rxerrorhandler.handler.listener.ResponseErrorListener;
 import com.gm.repository.utils.DataHelper;
-import com.gm.repository.utils.RequestInterceptor;
+import com.gm.repository.http.RequestInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -70,11 +70,17 @@ public class ClientModule {
     @Provides
     Retrofit provideRetrofit(@Nullable RetrofitConfiguration configuration,
                              Retrofit.Builder builder, OkHttpClient client, HttpUrl httpUrl) {
-        builder.baseUrl(httpUrl)//domain name
-                .client(client)//Set okhttp
+        builder
+                //domain name
+                .baseUrl(httpUrl)
+                //Set okhttp
+                .client(client)
+                //TODO
                 //.addCallAdapterFactory(new LiveDataCallAdapterFactory())//use LiveData
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//use rxjava
-                .addConverterFactory(GsonConverterFactory.create());//use Gson
+                //use rxjava
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                //use Gson
+                .addConverterFactory(GsonConverterFactory.create());
         if (configuration != null)
             configuration.configRetrofit(mApplication, builder);
         return builder.build();
@@ -89,22 +95,25 @@ public class ClientModule {
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addNetworkInterceptor(intercept);
 
-        if (handler != null)
+        if (handler != null) {
             builder.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     return chain.proceed(handler.onHttpRequestBefore(chain, chain.request()));
                 }
             });
+        }
 
-        if (interceptors != null) {//If the collection of interceptor is provided externally, it is traversed
+        //If the collection of interceptor is provided externally, it is traversed
+        if (interceptors != null) {
             for (Interceptor interceptor : interceptors) {
                 builder.addInterceptor(interceptor);
             }
         }
 
-        if (configuration != null)
+        if (configuration != null) {
             configuration.configOkhttp(mApplication, builder);
+        }
         return builder.build();
     }
 
@@ -125,7 +134,8 @@ public class ClientModule {
     @Singleton
     @Provides
     Interceptor provideInterceptor(RequestInterceptor intercept) {
-        return intercept;//An interceptor that prints the request information
+        //An interceptor that prints the request information
+        return intercept;
     }
 
 
@@ -144,8 +154,9 @@ public class ClientModule {
     @Provides
     Gson provideGson(@Nullable GsonConfiguration configuration) {
         GsonBuilder builder = new GsonBuilder();
-        if (configuration != null)
+        if (configuration != null) {
             configuration.configGson(mApplication, builder);
+        }
         return builder.create();
     }
 
@@ -153,14 +164,15 @@ public class ClientModule {
      * provide {@link RxCache}
      *
      * @param cacheDirectory RxCache cache path
-     * @return
+     * @return RxCache
      */
     @Singleton
     @Provides
     RxCache provideRxCache(@Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
         RxCache.Builder builder = new RxCache.Builder();
-        if (configuration != null)
+        if (configuration != null) {
             configuration.configRxCache(mApplication, builder);
+        }
         return builder
                 .persistence(cacheDirectory, new GsonSpeaker());
     }
@@ -169,7 +181,7 @@ public class ClientModule {
      * You need to provide a cache path to {@link RxCache}
      *
      * @param cacheDir
-     * @return
+     * @return File
      */
     @Singleton
     @Provides
@@ -181,18 +193,42 @@ public class ClientModule {
 
 
     public interface RetrofitConfiguration {
+        /**
+         * Provide interface, custom configuration Retrofit
+         *
+         * @param context Context
+         * @param builder Retrofit.Builder
+         */
         void configRetrofit(Context context, Retrofit.Builder builder);
     }
 
     public interface OkhttpConfiguration {
+        /**
+         * Provide interface, custom configuration OkHttpClient
+         *
+         * @param context Context
+         * @param builder OkHttpClient.Builder
+         */
         void configOkhttp(Context context, OkHttpClient.Builder builder);
     }
 
     public interface GsonConfiguration {
+        /**
+         * Provide interface, custom configuration Gson
+         *
+         * @param context Context
+         * @param builder GsonBuilder
+         */
         void configGson(Context context, GsonBuilder builder);
     }
 
     public interface RxCacheConfiguration {
+        /**
+         * Provide interface, custom configuration RxCache
+         *
+         * @param context Context
+         * @param builder RxCache.Builder
+         */
         void configRxCache(Context context, RxCache.Builder builder);
     }
 

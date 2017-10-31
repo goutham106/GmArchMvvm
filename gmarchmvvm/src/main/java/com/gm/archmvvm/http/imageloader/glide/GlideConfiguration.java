@@ -43,13 +43,16 @@ import java.io.InputStream;
  * Github     : https://github.com/goutham106
  * Created on : 9/19/17.
  * <p>
- * Glide Configuration
- *
+ * {@link AppGlideModule} The default implementation class
+ * Used to configure the cache folder, switch the image request frame and other operations
  * @link http://bumptech.github.io/glide/doc/configuration.html
  */
 
 @GlideModule(glideName = "GlideGm")
 public class GlideConfiguration extends AppGlideModule {
+    /**
+     * The maximum value for the image cache file is 100Mb
+     */
     public static final int IMAGE_DISK_CACHE_MAX_SIZE = 100 * 1024 * 1024;//The picture cache file has a maximum value of 100Mb
 
     @Override

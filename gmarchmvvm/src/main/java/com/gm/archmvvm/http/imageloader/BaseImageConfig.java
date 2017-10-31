@@ -28,9 +28,21 @@ import android.widget.ImageView;
  */
 
 public class BaseImageConfig {
+    /**
+     * image Url
+     */
     protected String url;
+    /**
+     * To be displayed ImageView
+     */
     protected ImageView imageView;
+    /**
+     * Image placeholder
+     */
     protected int placeholder;
+    /**
+     * Error image placeholder
+     */
     protected int errorPic;
 
     public String getUrl() {

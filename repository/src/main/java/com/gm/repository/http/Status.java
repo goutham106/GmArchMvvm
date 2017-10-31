@@ -26,7 +26,18 @@ package com.gm.repository.http;
  */
 
 public enum Status {
+    /**
+     * Is loading
+     */
     LOADING,
+
+    /**
+     * The load was successful
+     */
     SUCCESS,
+
+    /**
+     * Failed to load
+     */
     ERROR
 }

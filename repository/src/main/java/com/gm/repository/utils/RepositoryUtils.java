@@ -32,12 +32,27 @@ import com.gm.repository.di.component.RepositoryComponent;
  * RepositoryComponent Tools
  */
 public enum RepositoryUtils {
+    /**
+     * Enumeration of singleton mode implementation
+     */
     INSTANCE;
 
+    /**
+     * Get {@link RepositoryComponent}, using Dagger's external exposure method
+     *
+     * @param context Context
+     * @return LifecycleComponent
+     */
     public RepositoryComponent obtainRepositoryComponent(Context context) {
         return obtainRepositoryComponent((Application) context.getApplicationContext());
     }
 
+    /**
+     * Get {@link RepositoryComponent}, using Dagger's external exposure method
+     *
+     * @param application Application
+     * @return LifecycleComponent
+     */
     public RepositoryComponent obtainRepositoryComponent(Application application) {
         Preconditions.checkState(application instanceof IRepository,
                 "%s does not implements IRepository", application.getClass().getName());

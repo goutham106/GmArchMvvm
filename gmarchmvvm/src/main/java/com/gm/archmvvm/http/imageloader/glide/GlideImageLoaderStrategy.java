@@ -68,6 +68,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
             case 4:
                 glideRequest.diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
                 break;
+            default:
+                break;
         }
 
         if (config.getTransformation() != null)//Customize to change the picture shape

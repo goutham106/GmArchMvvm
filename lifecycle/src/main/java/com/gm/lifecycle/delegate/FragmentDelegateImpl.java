@@ -36,19 +36,8 @@ import dagger.android.support.AndroidSupportInjection;
  * <p>
  * Fragment Lifecycle Proxy Interface Implementation Class
  */
-
 public class FragmentDelegateImpl implements FragmentDelegate {
-    public static final Creator<FragmentDelegateImpl> CREATOR = new Creator<FragmentDelegateImpl>() {
-        @Override
-        public FragmentDelegateImpl createFromParcel(Parcel source) {
-            return new FragmentDelegateImpl(source);
-        }
 
-        @Override
-        public FragmentDelegateImpl[] newArray(int size) {
-            return new FragmentDelegateImpl[size];
-        }
-    };
     private FragmentManager mFragmentManager;
     private Fragment mFragment;
     private IFragment iFragment;
@@ -59,18 +48,17 @@ public class FragmentDelegateImpl implements FragmentDelegate {
         this.iFragment = (IFragment) fragment;
     }
 
-    protected FragmentDelegateImpl(Parcel in) {
-        this.mFragmentManager = in.readParcelable(FragmentManager.class.getClassLoader());
-        this.mFragment = in.readParcelable(Fragment.class.getClassLoader());
-        this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
-    }
-
     @Override
     public void onAttach(Context context) {
-        if (iFragment.useEventBus())//If you want to use eventbus please return this method to true
-            EventBus.getDefault().register(mFragment);//Register to the event main line
-        if (iFragment.injectable())
-            AndroidSupportInjection.inject(mFragment);//Dagger.Android Dependent injection
+        //If you want to use eventbus please return this method to true
+        if (iFragment.useEventBus()) {
+            //Register to the event main line
+            EventBus.getDefault().register(mFragment);
+        }
+        if (iFragment.injectable()) {
+            //Dagger.Android Dependent injection
+            AndroidSupportInjection.inject(mFragment);
+        }
     }
 
     @Override
@@ -125,8 +113,11 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDetach() {
-        if (iFragment.useEventBus())//If you want to use eventbus please return this method to true
-            EventBus.getDefault().unregister(mFragment);//Register to the event main line
+        //If you want to use eventbus please return this method to true
+        if (iFragment.useEventBus()) {
+            //Register to the event main line
+            EventBus.getDefault().unregister(mFragment);
+        }
         this.mFragmentManager = null;
         this.mFragment = null;
         this.iFragment = null;
@@ -149,4 +140,22 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public void writeToParcel(Parcel dest, int flags) {
 
     }
+
+    protected FragmentDelegateImpl(Parcel in) {
+        this.mFragmentManager = in.readParcelable(FragmentManager.class.getClassLoader());
+        this.mFragment = in.readParcelable(Fragment.class.getClassLoader());
+        this.iFragment = in.readParcelable(IFragment.class.getClassLoader());
+    }
+
+    public static final Creator<FragmentDelegateImpl> CREATOR = new Creator<FragmentDelegateImpl>() {
+        @Override
+        public FragmentDelegateImpl createFromParcel(Parcel source) {
+            return new FragmentDelegateImpl(source);
+        }
+
+        @Override
+        public FragmentDelegateImpl[] newArray(int size) {
+            return new FragmentDelegateImpl[size];
+        }
+    };
 }

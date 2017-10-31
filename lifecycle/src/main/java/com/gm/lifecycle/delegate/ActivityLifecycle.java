@@ -64,12 +64,12 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
         //If the intent contains this field, and is true, do not join the list for unified management
         boolean isNotAdd = false;
-        if (activity.getIntent() != null)
+        if (activity.getIntent() != null) {
             isNotAdd = activity.getIntent().getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false);
-
-        if (!isNotAdd)
+        }
+        if (!isNotAdd) {
             mAppManager.addActivity(activity);
-
+        }
         //ActivityDelegate Configuration
         if (activity instanceof IActivity && activity.getIntent() != null) {
             ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
@@ -158,22 +158,24 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         boolean useFragment = !(activity instanceof IActivity) || ((IActivity) activity).useFragment();
         if (activity instanceof FragmentActivity && useFragment) {
 
-            if (mFragmentLifecycle == null)
+            if (mFragmentLifecycle == null) {
                 mFragmentLifecycle = new FragmentLifecycle();
-
+            }
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle, true);
 
             if (mFragmentLifecycles == null && mExtras.containsKey(ConfigLifecycle.class.getName())) {
                 mFragmentLifecycles = new ArrayList<>();
                 List<ConfigLifecycle> lifecycles = (List<ConfigLifecycle>) mExtras.get(ConfigLifecycle.class.getName());
-                for (ConfigLifecycle lifecycle : lifecycles)
+                for (ConfigLifecycle lifecycle : lifecycles) {
                     lifecycle.injectFragmentLifecycle(mApplication, mFragmentLifecycles);
+                }
                 mExtras.remove(ConfigLifecycle.class.getName());
             }
 
-            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles)
+            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles) {
                 ((FragmentActivity) activity).getSupportFragmentManager()
                         .registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
+            }
         }
     }
 

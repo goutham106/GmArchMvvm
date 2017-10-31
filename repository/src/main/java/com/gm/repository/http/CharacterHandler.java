@@ -43,9 +43,11 @@ import javax.xml.transform.stream.StreamSource;
  * Github     : https://github.com/goutham106
  * Created on : 9/18/17.
  */
-@SuppressWarnings("all")
 public class CharacterHandler {
 
+    /**
+     * emoji 过滤器
+     */
     public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器
 
         Pattern emoji = Pattern.compile(
@@ -94,8 +96,8 @@ public class CharacterHandler {
     /**
      * json format
      *
-     * @param json
-     * @return
+     * @param json to format the json string
+     * @return formatted after the new string
      */
     public static String jsonFormat(String json) {
         if (TextUtils.isEmpty(json)) {
@@ -123,8 +125,8 @@ public class CharacterHandler {
     /**
      * xml format
      *
-     * @param xml
-     * @return
+     * @param xml The xml string to be formatted
+     * @return formatted after the new string
      */
     public static String xmlFormat(String xml) {
         if (TextUtils.isEmpty(xml)) {

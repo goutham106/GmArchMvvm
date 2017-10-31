@@ -26,7 +26,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.gm.archmvvm.base.GmActivity;
+import com.gm.archmvvm.base.BaseActivity;
 import com.gm.rtonumbermatcher.R;
 import com.gm.rtonumbermatcher.databinding.ActivityMainBinding;
 import com.gm.rtonumbermatcher.ui.generate.RtoFragment;
@@ -35,7 +35,7 @@ import com.gm.rtonumbermatcher.util.ToastUtils;
 
 import org.simple.eventbus.EventBus;
 
-public class MainActivity extends GmActivity<ActivityMainBinding, MainViewModel>
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel>
         implements NavigationView.OnNavigationItemSelectedListener {
 
 

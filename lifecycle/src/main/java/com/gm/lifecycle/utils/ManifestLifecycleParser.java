@@ -55,9 +55,7 @@ public final class ManifestLifecycleParser {
         Object lifecycle;
         try {
             lifecycle = clazz.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException("Unable to instantiate ConfigLifecycle implementation for " + clazz, e);
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException("Unable to instantiate ConfigLifecycle implementation for " + clazz, e);
         }
 
@@ -75,7 +73,7 @@ public final class ManifestLifecycleParser {
             if (appInfo.metaData != null) {
                 for (String key : appInfo.metaData.keySet()) {
                     if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
-                        Log.d("ManifestLifecycleParser ---> ",
+                        Log.d("Lifecycle ---> ",
                                 String.format("Find ConfigLifecycle in [%s]", key));
                         configLifecycles.add(parseModule(key));
                     }

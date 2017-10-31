@@ -14,12 +14,12 @@
  *    limitations under the License.
  */
 
-package com.gm.repository.utils;
+package com.gm.repository.http;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.gm.repository.http.CharacterHandler;
-import com.gm.repository.http.GlobalHttpHandler;
+import com.gm.repository.utils.ZipHelper;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -55,13 +55,87 @@ public class RequestInterceptor implements Interceptor {
     private final Level printLevel;
     private GlobalHttpHandler mHandler;
 
+    public enum Level {
+        /**
+         * Do not print log
+         */
+        NONE,
+
+        /**
+         * Only print request information
+         */
+        REQUEST,
+
+        /**
+         * Print only the response message
+         */
+        RESPONSE,
+
+        /**
+         * All data is printed
+         */
+        ALL
+    }
+
     @Inject
     public RequestInterceptor(@Nullable GlobalHttpHandler handler, @Nullable Level level) {
         this.mHandler = handler;
-        if (level == null)
+        if (level == null) {
             printLevel = Level.ALL;
-        else
+        } else {
             printLevel = level;
+        }
+    }
+
+    /**
+     * Response Interception
+     *
+     * @param chain Chain
+     * @return Response
+     * @throws IOException IOException
+     */
+    @Override
+    public Response intercept(@NonNull Chain chain) throws IOException {
+        Request request = chain.request();
+
+        boolean logRequest = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.REQUEST);
+
+        if (logRequest) {
+            boolean hasRequestBody = request.body() != null;
+            //Print request information
+            Timber.w("HTTP REQUEST >>>%n 「 %s 」%nParams : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」",
+                    getTag(request),
+                    hasRequestBody ? parseParams(request.newBuilder().build().body()) : "Null",
+                    chain.connection(),
+                    request.headers());
+        }
+
+        boolean logResponse = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.RESPONSE);
+
+        long t1 = logResponse ? System.nanoTime() : 0;
+        Response originalResponse;
+        try {
+            originalResponse = chain.proceed(request);
+        } catch (Exception e) {
+            w("Http Error: " + e);
+            throw e;
+        }
+        long t2 = logResponse ? System.nanoTime() : 0;
+
+        if (logResponse) {
+            String bodySize = originalResponse.body().contentLength() != -1 ? originalResponse.body().contentLength() + "-byte" : "unknown-length";
+            //Print response time and response header
+            Timber.w("HTTP RESPONSE in [ %d-ms ] , [ %s ] >>>%n%s",
+                    TimeUnit.NANOSECONDS.toMillis(t2 - t1), bodySize, originalResponse.headers());
+        }
+
+        //Print the response results
+        String bodyString = printResult(request, originalResponse.newBuilder().build(), logResponse);
+
+        if (mHandler != null)//Here can be a step ahead of the client to get the results of the server to return, you can do some operations, such as token timeout, re-get
+            return mHandler.onHttpResultResponse(bodyString, chain, originalResponse);
+
+        return originalResponse;
     }
 
     public static String parseParams(RequestBody body) throws UnsupportedEncodingException {
@@ -115,58 +189,14 @@ public class RequestInterceptor implements Interceptor {
         return s.substring(i + 1, s.length() - 1);
     }
 
-    @Override
-    public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
-
-        boolean logRequest = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.REQUEST);
-
-        if (logRequest) {
-            boolean hasRequestBody = request.body() != null;
-            //Print request information
-            Timber.w("HTTP REQUEST >>>%n 「 %s 」%nParams : 「 %s 」%nConnection : 「 %s 」%nHeaders : %n「 %s 」",
-                    getTag(request),
-                    hasRequestBody ? parseParams(request.newBuilder().build().body()) : "Null",
-                    chain.connection(),
-                    request.headers());
-        }
-
-        boolean logResponse = printLevel == Level.ALL || (printLevel != Level.NONE && printLevel == Level.RESPONSE);
-
-        long t1 = logResponse ? System.nanoTime() : 0;
-        Response originalResponse;
-        try {
-            originalResponse = chain.proceed(request);
-        } catch (Exception e) {
-            w("Http Error: " + e);
-            throw e;
-        }
-        long t2 = logResponse ? System.nanoTime() : 0;
-
-        if (logResponse) {
-            String bodySize = originalResponse.body().contentLength() != -1 ? originalResponse.body().contentLength() + "-byte" : "unknown-length";
-            //Print response time and response header
-            Timber.w("HTTP RESPONSE in [ %d-ms ] , [ %s ] >>>%n%s",
-                    TimeUnit.NANOSECONDS.toMillis(t2 - t1), bodySize, originalResponse.headers());
-        }
-
-        //Print the response results
-        String bodyString = printResult(request, originalResponse.newBuilder().build(), logResponse);
-
-        if (mHandler != null)//Here can be a step ahead of the client to get the results of the server to return, you can do some operations, such as token timeout, re-get
-            return mHandler.onHttpResultResponse(bodyString, chain, originalResponse);
-
-        return originalResponse;
-    }
-
     /**
      * Print the response results
      *
-     * @param request
-     * @param response
-     * @param logResponse
-     * @return
-     * @throws IOException
+     * @param request Request
+     * @param response Response
+     * @param logResponse Whether to print
+     * @return String
+     * @throws IOException IOException
      */
     @Nullable
     private String printResult(Request request, Response response, boolean logResponse) throws IOException {
@@ -217,10 +247,10 @@ public class RequestInterceptor implements Interceptor {
     /**
      * Resolve the contents of the server response
      *
-     * @param responseBody
-     * @param encoding
-     * @param clone
-     * @return
+     * @param responseBody ResponseBody
+     * @param encoding coding
+     * @param clone Buffer
+     * @return String
      */
     private String parseContent(ResponseBody responseBody, String encoding, Buffer clone) {
         Charset charset = Charset.forName("UTF-8");
@@ -235,12 +265,5 @@ public class RequestInterceptor implements Interceptor {
         } else {//content is not compressed
             return clone.readString(charset);
         }
-    }
-
-    public enum Level {
-        NONE,       //Do not print log
-        REQUEST,    //Only print request information
-        RESPONSE,   //Print only the response message
-        ALL         //All data is printed
     }
 }

@@ -33,7 +33,6 @@ import timber.log.Timber;
  * Fragment life cycle callback.
  * After the Fragment corresponding lifecycle method has been executed.
  */
-
 public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
 
     @Override

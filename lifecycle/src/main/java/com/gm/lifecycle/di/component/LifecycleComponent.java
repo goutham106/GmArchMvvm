@@ -38,11 +38,22 @@ import dagger.Component;
 @Component(modules = LifecycleModule.class)
 public interface LifecycleComponent {
 
-    //Used to access some of the App common data, do not store large amounts of data
+    /**
+     * Used to access some of the App common data, do not store large amounts of data
+     * @return Global cache
+     */
     Map<String, Object> extras();
 
-    //Used to manage all activities
+    /**
+     *
+     * @return AppManager
+     */
     AppManager appManager();
 
+    /**
+     * Dagger injection
+     *
+     * @param lifecycleInjector LifecycleInjector
+     */
     void inject(LifecycleInjector lifecycleInjector);
 }
