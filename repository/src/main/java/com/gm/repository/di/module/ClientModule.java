@@ -22,10 +22,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.gm.repository.http.GlobalHttpHandler;
+import com.gm.repository.http.RequestInterceptor;
 import com.gm.repository.rxerrorhandler.core.RxErrorHandler;
 import com.gm.repository.rxerrorhandler.handler.listener.ResponseErrorListener;
 import com.gm.repository.utils.DataHelper;
-import com.gm.repository.http.RequestInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -75,8 +75,8 @@ public class ClientModule {
                 .baseUrl(httpUrl)
                 //Set okhttp
                 .client(client)
-                //TODO
-                //.addCallAdapterFactory(new LiveDataCallAdapterFactory())//use LiveData
+                //TODO: to use use LiveData
+                //.addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 //use rxjava
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 //use Gson
@@ -170,17 +170,20 @@ public class ClientModule {
     @Provides
     RxCache provideRxCache(@Nullable RxCacheConfiguration configuration, @Named("RxCacheDirectory") File cacheDirectory) {
         RxCache.Builder builder = new RxCache.Builder();
+        RxCache rxCache = null;
         if (configuration != null) {
-            configuration.configRxCache(mApplication, builder);
+            rxCache = configuration.configRxCache(mApplication, builder);
         }
-        return builder
-                .persistence(cacheDirectory, new GsonSpeaker());
+        if (rxCache != null) {
+            return rxCache;
+        }
+        return builder.persistence(cacheDirectory, new GsonSpeaker());
     }
 
     /**
      * You need to provide a cache path to {@link RxCache}
      *
-     * @param cacheDir
+     * @param cacheDir CacheDir
      * @return File
      */
     @Singleton
@@ -229,7 +232,7 @@ public class ClientModule {
          * @param context Context
          * @param builder RxCache.Builder
          */
-        void configRxCache(Context context, RxCache.Builder builder);
+        RxCache configRxCache(Context context, RxCache.Builder builder);
     }
 
 }

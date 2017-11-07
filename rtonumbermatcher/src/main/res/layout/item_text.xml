@@ -24,7 +24,9 @@
             type="com.gm.rtonumbermatcher.ui.generate.model.TextContent" />
 
     </data>
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -32,7 +34,6 @@
         android:layout_marginLeft="@dimen/recycler_item_margin"
         android:layout_marginRight="@dimen/recycler_item_margin"
         android:layout_marginTop="@dimen/recycler_item_margin_top"
-        android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
         app:cardPreventCornerOverlap="false"
@@ -53,4 +54,5 @@
             android:textStyle="bold"
             app:autoSizeTextType="uniform" />
     </android.support.v7.widget.CardView>
+    </FrameLayout>
 </layout>

@@ -65,12 +65,13 @@ public class RepositoryConfiguration implements ConfigRepository {
                     // okhttpBuilder.sslSocketFactory()
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
                 })
+                //Here you can customize the configuration of RxCache parameters
                 .rxCacheConfiguration((context1, rxCacheBuilder) -> {
-                    //Here you can customize the configuration of RxCache parameters
                     rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
+                    return null;
                 })
+                //Here you can customize the configuration RoomDatabase, such as database migration upgrade
                 .roomConfiguration((context1, roomBuilder) -> {
-                    //Here you can customize the configuration RoomDatabase, such as database migration upgrade
 /*                    roomBuilder.addMigrations(new Migration(1, 2) {
                         @Override
                         public void migrate(SupportSQLiteDatabase database) {

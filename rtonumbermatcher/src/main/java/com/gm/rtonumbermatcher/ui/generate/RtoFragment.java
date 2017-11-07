@@ -53,7 +53,6 @@ public class RtoFragment extends BaseFragment<FragmentRtoBinding, RtoViewModel> 
         return fragment;
     }
 
-
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(RtoViewModel.class);
@@ -64,14 +63,13 @@ public class RtoFragment extends BaseFragment<FragmentRtoBinding, RtoViewModel> 
 
     @Override
     public void initData(Bundle savedInstanceState) {
-//        mBinding.txtResponse.setHasFixedSize(true);
+        mBinding.txtResponse.setHasFixedSize(true);
         mBinding.txtResponse.setLayoutManager(new VegaLayoutManager());
         mAdapter = new RtoAdapter(R.layout.item_text, null);
 //        mAdapter.openLoadAnimation(new CustomAnimation());
 //        mAdapter.isFirstOnly(false);
         mBinding.txtResponse.setAdapter(mAdapter);
         emptyWindow();
-
     }
 
     @Override

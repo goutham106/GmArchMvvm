@@ -16,12 +16,16 @@
 
 package com.gm.rtonumbermatcher.ui.generate.adapter;
 
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.gm.archmvvm.mvvm.binding.BaseBindAdapter;
 import com.gm.archmvvm.mvvm.binding.BaseBindHolder;
 import com.gm.rtonumbermatcher.BR;
+import com.gm.rtonumbermatcher.R;
 import com.gm.rtonumbermatcher.ui.generate.model.TextContent;
 
 import java.util.List;
