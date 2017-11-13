@@ -30,6 +30,7 @@ import com.gm.archmvvm.base.BaseActivity;
 import com.gm.rtonumbermatcher.R;
 import com.gm.rtonumbermatcher.databinding.ActivityMainBinding;
 import com.gm.rtonumbermatcher.ui.generate.RtoFragment;
+import com.gm.rtonumbermatcher.util.DebouncingOnClickListener;
 import com.gm.rtonumbermatcher.util.FragmentUtils;
 import com.gm.rtonumbermatcher.util.ToastUtils;
 
@@ -59,18 +60,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mBinding.navView.setNavigationItemSelectedListener(this);
         initToolbar();
         openFragment();
-        mBinding.appContainer.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(view, "onFabClick");
-            }
-        });
+//        mBinding.appContainer.fab.setOnClickListener(view -> EventBus.getDefault().post(view, "onFabClick"));
+        mBinding.appContainer.fab.setOnClickListener((DebouncingOnClickListener) v -> EventBus.getDefault().post(v, "onFabClick"));
     }
 
     private void openFragment() {
 //        ArrayList<Fragment> fragments = new ArrayList<>();
 //        fragments.add(RtoFragment.newInstance());
-        rootFragment = FragmentUtils.addFragment(getSupportFragmentManager(), RtoFragment.newInstance(), R.id.main_container, false);
+        rootFragment = FragmentUtils.replaceFragment(getSupportFragmentManager(), RtoFragment.newInstance(), R.id.main_container, false);
 //        FragmentManager manager = getSupportFragmentManager();
 //        FragmentTransaction transaction = manager.beginTransaction();
 //        transaction.replace(R.id.main_container, RtoFragment.newInstance());

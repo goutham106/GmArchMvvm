@@ -18,6 +18,8 @@ package com.gm.rtonumbermatcher.util;
 
 import android.view.View;
 
+import com.gm.gmwidgets.GmFadeTextView;
+
 /**
  * Author     : Gowtham
  * Email      : goutham.gm11@gmail.com
@@ -37,7 +39,8 @@ public interface DebouncingOnClickListener extends View.OnClickListener {
     default void onClick(View v) {
         if (enabled.get()) {
             enabled.set(false);
-            v.post(ENABLE_AGAIN);
+//            v.post(ENABLE_AGAIN);
+            v.postDelayed(ENABLE_AGAIN, 10000);
             doClick(v);
         }
     }

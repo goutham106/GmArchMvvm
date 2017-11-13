@@ -109,12 +109,7 @@
                 android:id="@+id/txtResponse"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_margin="8dp"
                 app:visibleGone="@{viewModel.mStatus != Status.ERROR}"
                 tools:listitem="@layout/item_text" />
         </LinearLayout>

@@ -16,6 +16,7 @@
 
 package com.gm.lifecycle.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -254,6 +255,7 @@ public class UiUtils {
      * @param rID
      * @return
      */
+    @TargetApi(value = 21)
     public static Drawable getDrawablebyResource(Context context, int rID) {
         return getResources(context).getDrawable(rID,null);
     }
@@ -326,6 +328,7 @@ public class UiUtils {
     /**
      * Get the color
      */
+    @TargetApi(value = 23)
     public static int getColor(Context context, int rid) {
         return getResources(context).getColor(rid,null);
     }

@@ -52,9 +52,12 @@ public final class ManifestGmParser {
         Object gms;
         try {
             gms = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
+        } catch (IllegalAccessException e) {
             throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
         }
+
 
         if (!(gms instanceof ConfigGm)) {
             throw new RuntimeException("Expected instanceof ConfigArms, but found: " + gms);

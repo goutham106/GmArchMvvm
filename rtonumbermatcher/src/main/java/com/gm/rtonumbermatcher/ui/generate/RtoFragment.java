@@ -28,15 +28,17 @@ import com.gm.archmvvm.base.BaseFragment;
 import com.gm.rtonumbermatcher.R;
 import com.gm.rtonumbermatcher.databinding.FragmentRtoBinding;
 import com.gm.rtonumbermatcher.ui.generate.adapter.RtoAdapter;
+import com.gm.rtonumbermatcher.ui.generate.model.TextContent;
 import com.gm.rtonumbermatcher.ui.main.MainViewModel;
-import com.gm.rtonumbermatcher.util.CustomAnimation;
-import com.gm.rtonumbermatcher.util.DebouncingOnClickListener;
 import com.gm.rtonumbermatcher.util.KeyboardUtils;
 import com.gm.rtonumbermatcher.util.ToastUtils;
 import com.gm.rtonumbermatcher.util.VegaLayoutManager;
 
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -63,11 +65,12 @@ public class RtoFragment extends BaseFragment<FragmentRtoBinding, RtoViewModel> 
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mBinding.txtResponse.setHasFixedSize(true);
+//        mBinding.txtResponse.setHasFixedSize(true);
         mBinding.txtResponse.setLayoutManager(new VegaLayoutManager());
-        mAdapter = new RtoAdapter(R.layout.item_text, null);
-//        mAdapter.openLoadAnimation(new CustomAnimation());
-//        mAdapter.isFirstOnly(false);
+        List<TextContent> textContents = new ArrayList<>();
+        mAdapter = new RtoAdapter(R.layout.item_text, textContents);
+////        mAdapter.openLoadAnimation(new CustomAnimation());
+////        mAdapter.isFirstOnly(false);
         mBinding.txtResponse.setAdapter(mAdapter);
         emptyWindow();
     }
@@ -85,10 +88,8 @@ public class RtoFragment extends BaseFragment<FragmentRtoBinding, RtoViewModel> 
 
     @Subscriber(tag = "onFabClick", mode = ThreadMode.POST)
     private void onClickFab(View view) {
-        view.setOnClickListener((DebouncingOnClickListener) v -> {
-            generateList();
-            KeyboardUtils.hideSoftInput(getActivity());
-        });
+        generateList();
+        KeyboardUtils.hideSoftInput(getActivity());
     }
 
 
