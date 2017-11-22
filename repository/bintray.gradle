@@ -12,7 +12,7 @@ def gitUrl = 'https://github.com/goutham106/GmArchMvvm.git'   // Git repository 
 def siteUrl = 'https://github.com/goutham106/GmArchMvvm'   // Project's home page
 
 version = rootProject.ext.android["versionName"]
-group = "com.github.goutham106"
+group = "com.github.goutham106.gmarchmvvm"
 
 
 bintray {
