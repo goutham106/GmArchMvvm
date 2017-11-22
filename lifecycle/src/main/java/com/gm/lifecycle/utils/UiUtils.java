@@ -223,9 +223,9 @@ public class UiUtils {
     }
 
     /**
-     * Use {@link Snackbar} to display text messages
+     * Use {@link #snackbarText(String)} to display text messages
      *
-     * @param text
+     * @param text String
      */
     public static void snackbarText(String text) {
         Message message = new Message();
@@ -236,9 +236,9 @@ public class UiUtils {
     }
 
     /**
-     * Use {@link Snackbar} to display text messages for a long time
+     * Use {@link #snackbarTextWithLong(String)} to display text messages for a long time
      *
-     * @param text
+     * @param text String
      */
     public static void snackbarTextWithLong(String text) {
         Message message = new Message();
@@ -264,8 +264,7 @@ public class UiUtils {
     /**
      * Jump interface 1, via {@link AppManager # startActivity (Class)}
      *
-     * @param
-     * @param homeActivityClass
+     * @param activityClass Class
      */
     public static void startActivity(Class activityClass) {
         Message message = new Message();
@@ -277,7 +276,7 @@ public class UiUtils {
     /**
      * Jump interface 2, via {@link AppManager # startActivity (Class)}
      *
-     * @param
+     * @param content Intent
      */
     public static void startActivity(Intent content) {
         Message message = new Message();
@@ -300,7 +299,8 @@ public class UiUtils {
     /**
      * Jump interface
      *
-     * @param
+     * @param activity Activity
+     * @param intent Intent
      */
     public static void startActivity(Activity activity, Intent intent) {
         activity.startActivity(intent);
@@ -366,7 +366,6 @@ public class UiUtils {
      *
      * @param string
      * @return
-     * @throws Exception
      */
     public static String encodeToMD5(String string) {
         byte[] hash = new byte[0];

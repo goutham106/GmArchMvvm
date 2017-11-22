@@ -54,7 +54,8 @@ public interface IActivity {
     boolean useEventBus();
 
     /**
-     * Whether the Activity will use Fragment, the framework will be based on this property to determine whether to register {@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
+     * Whether the Activity will use Fragment, the framework will be based on this property to determine
+     * whether to register {@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
      * Default (true)
      *
      * @return boolean

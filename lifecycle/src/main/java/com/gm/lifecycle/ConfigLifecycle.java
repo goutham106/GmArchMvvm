@@ -36,7 +36,7 @@ public interface ConfigLifecycle {
      * Use {@link AppLifecycles} to inject some operations in the application's lifecycle
      *
      * @param context:    Context
-     * @param lifecycles: List<AppLifecycles>
+     * @param lifecycles: List of AppLifecycles
      */
     void injectAppLifecycle(Context context, List<AppLifecycles> lifecycles);
 
@@ -44,7 +44,7 @@ public interface ConfigLifecycle {
      * Use {@link Application.ActivityLifecycleCallbacks} to inject some actions in the Activity lifecycle
      *
      * @param context:    Context
-     * @param lifecycles: List<Application.ActivityLifecycleCallbacks>
+     * @param lifecycles: List of Application.ActivityLifecycleCallbacks
      */
     void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles);
 
@@ -53,7 +53,7 @@ public interface ConfigLifecycle {
      * Use {@link FragmentManager.FragmentLifecycleCallbacks} to inject some actions in the Fragment lifecycle
      *
      * @param context:    Context
-     * @param lifecycles: List<FragmentManager.FragmentLifecycleCallbacks>
+     * @param lifecycles: List of FragmentManager.FragmentLifecycleCallbacks
      */
     void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles);
 }

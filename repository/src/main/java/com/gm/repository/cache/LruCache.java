@@ -47,7 +47,7 @@ public class LruCache<K, V> implements Cache<K, V> {
     }
 
     /**
-     * Set a coefficient applied to the constructor in the current size, so as to get a new {@link # maxSize}
+     * Set a coefficient applied to the constructor in the current size, so as to get a new {@link #maxSize}
      * And immediately call {@link #evict} to clear the entry that satisfies the condition
      *
      * @param multiplier coefficient

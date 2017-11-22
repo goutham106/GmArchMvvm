@@ -203,13 +203,14 @@ public final class AppManager {
     /**
      * Get the activity in the foreground (to ensure that the activity is in the visible state, that is not called onStop), to obtain the activity duration
      * Is before the onStop, so if this activity calls the onStop method, no other activity back to the foreground (the user returns to the desktop or open other App will appear this situation)
-     * It is possible to call {@link #getCurrentActivity ()} to return null, so please note that the scene is not the same as {@link #getTopActivity ()}
+     * It is possible to call {@link #getCurrentActivity()} to return null, so please note that the scene is not the same as {@link #getTopActivity()}
      * <p>
      * Example usage:
      * Use scenes that are more appropriate, only need to be performed in the visible state of the activity
-     * If the background service to perform a task, you need to let the front of the activity, to make a response to the operation or other operations, such as pop-up Dialog, then in the service can use {@link #getCurrentActivity ()
-     *  * If the return is null, that there is no foreground activity (the user returns to the desktop or open other App will appear this situation), then do nothing, not null, then pop up Dialog
-     *  *
+     * If the background service to perform a task, you need to let the front of the activity, to make a response to the operation or other operations, such as pop-up Dialog,
+     * then in the service can use {@link #getCurrentActivity()
+     * If the return is null, that there is no foreground activity (the user returns to the desktop or open other App will appear this situation), then do nothing, not null, then pop up Dialog
+     *
      *
      * @return
      */
