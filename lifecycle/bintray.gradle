@@ -11,7 +11,7 @@ if (project.rootProject.findProject('local.properties') != null) {
 def gitUrl = 'https://github.com/goutham106/GmArchMvvm.git'   // Git repository url
 def siteUrl = 'https://github.com/goutham106/GmArchMvvm'   // Project's home page
 
-version = rootProject.ext.android["versionName"]
+version = libraryVersion //rootProject.ext.android["versionName"]
 group = "com.github.goutham106.gmarchmvvm"
 
 
@@ -28,6 +28,10 @@ bintray {
         publish = true // Whether it is a public project。
 
         version {
+//            gpg {
+//                sign = true //Determines whether to GPG sign the files. The default is false
+//                passphrase = properties.getProperty("bintray.gpg.password") //Optional. The passphrase for GPG signing'
+//            }
             name = rootProject.ext.android["versionName"]
             desc = 'Android MVVM Architecture Components and Android Architecture Components.'
             released = new Date()
@@ -60,7 +64,7 @@ install {
                 developers {
                     developer {
                         id 'goutham106'        //Fill in the user name of bintray or github
-                        name 'Gowtham Parimalazhagan'         //Name
+                        name 'Gowtham Parimelazhagan'         //Name
                         email 'goutham.gm11@gmail.com'
                     }
                 }

@@ -11,7 +11,7 @@ if (project.rootProject.findProject('local.properties') != null) {
 def gitUrl = 'https://github.com/goutham106/GmArchMvvm.git'   // Git repository url
 def siteUrl = 'https://github.com/goutham106/GmArchMvvm'   // Project's home page
 
-version = rootProject.ext.android["versionName"]
+version = libraryVersion //rootProject.ext.android["versionName"]
 group = "com.github.goutham106.gmarchmvvm"
 
 
@@ -21,7 +21,7 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = 'archmvvm'
+        name = 'gmarchmvvm'
         licenses = ["Apache-2.0"]
         websiteUrl = siteUrl
         vcsUrl = gitUrl
@@ -47,7 +47,7 @@ install {
             project {
                 packaging 'aar'
                 // Add your description here
-                name 'ArcMvvm'
+                name 'gmarchmvvm'
                 description 'Android MVVM Architecture Components and Android Architecture Components.'
                 url siteUrl
                 // Set your license
@@ -60,7 +60,7 @@ install {
                 developers {
                     developer {
                         id 'goutham106'        //Fill in the user name of bintray or github
-                        name 'Gowtham Parimalazhagan'         //Name
+                        name 'Gowtham Parimelazhagan'         //Name
                         email 'goutham.gm11@gmail.com'
                     }
                 }

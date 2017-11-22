@@ -16,6 +16,9 @@
 
 apply plugin: 'com.android.library'
 
+ext {
+    libraryVersion = '0.1'
+}
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
