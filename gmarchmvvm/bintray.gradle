@@ -1,0 +1,93 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+Properties properties = new Properties()
+boolean isHasFile = false
+if (project.rootProject.findProject('local.properties') != null) {
+    isHasFile = true
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
+def gitUrl = 'https://github.com/goutham106/GmArchMvvm.git'   // Git repository url
+def siteUrl = 'https://github.com/goutham106/GmArchMvvm'   // Project's home page
+
+version = rootProject.ext.android["versionName"]
+group = "com.github.goutham106"
+
+
+bintray {
+    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("bintray_user")
+    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("bintray_apikey")
+
+    pkg {
+        repo = 'maven'
+        name = 'archmvvm'
+        licenses = ["Apache-2.0"]
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        publish = true // Whether it is a public project。
+
+        version {
+            name = rootProject.ext.android["versionName"]
+            desc = 'Android MVVM Architecture Components and Android Architecture Components.'
+            released = new Date()
+            vcsTag = 'v' + rootProject.ext.android["versionName"]
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+    configurations = ['archives']
+}
+
+
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                // Add your description here
+                name 'ArcMvvm'
+                description 'Android MVVM Architecture Components and Android Architecture Components.'
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'goutham106'        //Fill in the user name of bintray or github
+                        name 'Gowtham Parimalazhagan'         //Name
+                        email 'goutham.gm11@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}

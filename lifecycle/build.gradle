@@ -19,14 +19,11 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
-//    useLibrary 'org.apache.http.legacy'
 
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
-
-//    publishNonDefault true
 
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -48,6 +45,12 @@ android {
 
 }
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
 dependencies {
     //support
     api(rootProject.ext.dependencies["support-v4"]) {
@@ -63,14 +66,13 @@ dependencies {
         exclude module: 'support-v4'
     }
 
-    //Architecture Components ILifecycle
+    //Architecture Components Lifecycle
     api rootProject.ext.dependencies["lifecycle-runtime"]
     api rootProject.ext.dependencies["lifecycle-extensions"]
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
 
     //tools
-    compileOnly rootProject.ext.dependencies["javax.annotation"]
-    api rootProject.ext.dependencies["dagger2"]
+    implementation rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api(rootProject.ext.dependencies["dagger2-android"]) {
         exclude module: 'jsr305'
@@ -82,7 +84,7 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
         exclude module: 'jsr305'
     }
-    api rootProject.ext.dependencies["timber"]
+    implementation rootProject.ext.dependencies["timber"]
     api rootProject.ext.dependencies["androideventbus"]
 
     //test
@@ -92,3 +94,5 @@ dependencies {
     }
 
 }
+
+apply from: 'bintray.gradle'

@@ -27,6 +27,7 @@ import com.gm.rtonumbermatcher.databinding.ActivitySplashBinding;
 import com.gm.rtonumbermatcher.ui.main.MainActivity;
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
+
     @Override
     public int initView(Bundle savedInstanceState) {
 

@@ -60,7 +60,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        Timber.w(String.format("%s ---> onActivityCreated", activity));
+        Timber.w("%s ---> onActivityCreated", activity);
 
         //If the intent contains this field, and is true, do not join the list for unified management
         boolean isNotAdd = false;
@@ -87,7 +87,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityStarted(Activity activity) {
-        Timber.w(String.format("%s ---> onActivityStarted", activity));
+        Timber.w("%s ---> onActivityStarted", activity);
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onStart();
@@ -96,7 +96,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityResumed(Activity activity) {
-        Timber.w(String.format("%s ---> onActivityResumed", activity));
+        Timber.w("%s ---> onActivityResumed", activity);
         mAppManager.setCurrentActivity(activity);
 
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
@@ -107,7 +107,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityPaused(Activity activity) {
-        Timber.w(String.format("%s ---> onActivityPaused", activity));
+        Timber.w("%s ---> onActivityPaused", activity);
 
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
@@ -117,7 +117,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityStopped(Activity activity) {
-        Timber.w(String.format("%s ---> onActivityStopped", activity));
+        Timber.w("%s ---> onActivityStopped", activity);
         if (mAppManager.getCurrentActivity() == activity) {
             mAppManager.setCurrentActivity(null);
         }
@@ -130,7 +130,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        Timber.w(String.format("%s ---> onActivitySaveInstanceState", activity));
+        Timber.w("%s ---> onActivitySaveInstanceState", activity);
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onSaveInstanceState(outState);
@@ -139,7 +139,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        Timber.w(String.format("%s ---> onActivityDestroyed", activity));
+        Timber.w("%s ---> onActivityDestroyed", activity);
         mAppManager.removeActivity(activity);
 
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);

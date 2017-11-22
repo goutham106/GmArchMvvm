@@ -19,7 +19,6 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
-    useLibrary 'org.apache.http.legacy'
 
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
@@ -35,12 +34,12 @@ android {
         versionName rootProject.ext.android["versionName"]
 
         //Room
-        /* javaCompileOptions {
+         javaCompileOptions {
              annotationProcessorOptions {
                  arguments = ["room.schemaLocation":
                                       "$projectDir/schemas".toString()]
              }
-         }*/
+         }
     }
     buildTypes {
         debug {
@@ -56,6 +55,10 @@ android {
     dataBinding {
         enabled true
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 buildscript {
@@ -70,7 +73,7 @@ dependencies {
     api project(':lifecycle')
 
     //support
-    api(rootProject.ext.dependencies["support-v4"]) {
+   /* api(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
     }
     api(rootProject.ext.dependencies["appcompat-v7"]) {
@@ -81,7 +84,7 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'
-    }
+    }*/
     api(rootProject.ext.dependencies["cardview-v7"]) {
         exclude module: 'support-annotations'
     }
@@ -93,10 +96,10 @@ dependencies {
     }
 
     //mvvm(Lifecycles, LiveData, and ViewModel, Room)
-    api rootProject.ext.dependencies["lifecycle-runtime"]
-    api rootProject.ext.dependencies["lifecycle-extensions"]
+//    api rootProject.ext.dependencies["lifecycle-runtime"]
+//    api rootProject.ext.dependencies["lifecycle-extensions"]
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
-    api rootProject.ext.dependencies["room-runtime"]
+//    api rootProject.ext.dependencies["room-runtime"]
     annotationProcessor rootProject.ext.dependencies["room-compiler"]
     testApi(rootProject.ext.dependencies["room-testing"]) {
         exclude module: 'support-compat'
@@ -104,23 +107,17 @@ dependencies {
         exclude module: 'support-core-utils'
         exclude module: 'gson'
     }
-    api rootProject.ext.dependencies["room-rxjava2"]
+//    api rootProject.ext.dependencies["room-rxjava2"]
 
     //tools
-    compileOnly rootProject.ext.dependencies["javax.annotation"]
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    api(rootProject.ext.dependencies["dagger2-android"]) {
-        exclude module: 'jsr305'
-    }
-    api(rootProject.ext.dependencies["dagger2-android-support"]) {
-        exclude module: 'jsr305'
-        exclude module: 'appcompat-v7'
-    }
     annotationProcessor(rootProject.ext.dependencies["dagger2-android-processor"]) {
         exclude module: 'jsr305'
     }
-    api rootProject.ext.dependencies["androideventbus"]
+    api(rootProject.ext.dependencies["glide"]) {
+        exclude module: 'support-v4'
+    }
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
     }
@@ -140,3 +137,5 @@ dependencies {
      }*/
 
 }
+
+apply from: 'bintray.gradle'
