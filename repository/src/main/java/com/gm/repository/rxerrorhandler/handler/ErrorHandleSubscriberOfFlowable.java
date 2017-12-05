@@ -16,32 +16,48 @@
 
 package com.gm.repository.rxerrorhandler.handler;
 
-import android.content.Context;
 
-import com.gm.repository.rxerrorhandler.handler.listener.ResponseErrorListener;
+import com.gm.repository.rxerrorhandler.core.RxErrorHandler;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
+import io.reactivex.annotations.NonNull;
+
 
 /**
  * Author     : Gowtham
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
- * Created on : 9/19/17.
+ * Created on : 12/5/17.
  */
 
-public class ErrorHandlerFactory {
-    public final String TAG = this.getClass().getSimpleName();
-    private Context mContext;
-    private ResponseErrorListener mResponseErrorListener;
+public class ErrorHandleSubscriberOfFlowable<T> implements Subscriber<T> {
+    private ErrorHandlerFactory mHandlerFactory;
 
-    public ErrorHandlerFactory(Context mContext, ResponseErrorListener mResponseErrorListener) {
-        this.mResponseErrorListener = mResponseErrorListener;
-        this.mContext = mContext;
+    public ErrorHandleSubscriberOfFlowable(RxErrorHandler rxErrorHandler){
+        this.mHandlerFactory = rxErrorHandler.getHandlerFactory();
     }
 
-    /**
-     *  Processing error
-     * @param throwable
-     */
-    public void handleError(Throwable throwable) {
-        mResponseErrorListener.handleResponseError(mContext, throwable);
+    @Override
+    public void onSubscribe(Subscription s) {
+
+    }
+
+    @Override
+    public void onNext(T t) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
+
+
+    @Override
+    public void onError(@NonNull Throwable t) {
+        t.printStackTrace();
+        mHandlerFactory.handleError(t);
     }
 }

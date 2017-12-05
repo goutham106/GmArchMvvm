@@ -18,48 +18,50 @@ package com.gm.repository.rxerrorhandler.handler;
 
 import android.util.Log;
 
+import org.reactivestreams.Publisher;
+
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
+
 
 /**
  * Author     : Gowtham
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
- * Created on : 9/19/17.
+ * Created on : 12/5/17.
  */
 
-public class RetryWithDelay implements
-        Function<Observable<Throwable>, ObservableSource<?>> {
+public class RetryWithDelayOfFlowable implements
+        Function<Flowable<Throwable>, Publisher<?>> {
 
     public final String TAG = this.getClass().getSimpleName();
     private final int maxRetries;
     private final int retryDelaySecond;
     private int retryCount;
 
-    public RetryWithDelay(int maxRetries, int retryDelaySecond) {
+    public RetryWithDelayOfFlowable(int maxRetries, int retryDelaySecond) {
         this.maxRetries = maxRetries;
         this.retryDelaySecond = retryDelaySecond;
     }
 
     @Override
-    public ObservableSource<?> apply(@NonNull Observable<Throwable> throwableObservable) throws Exception {
-        return throwableObservable
-                .flatMap(new Function<Throwable, ObservableSource<?>>() {
+    public Publisher<?> apply(@NonNull Flowable<Throwable> throwableFlowable) throws Exception {
+        return throwableFlowable
+                .flatMap(new Function<Throwable, Publisher<?>>() {
                     @Override
-                    public ObservableSource<?> apply(@NonNull Throwable throwable) throws Exception {
+                    public Publisher<?> apply(@NonNull Throwable throwable) throws Exception {
                         if (++retryCount <= maxRetries) {
                             // When this Observable calls onNext, the original Observable will be retried (i.e. re-subscribed).
-                            Log.d(TAG, "Observable get error, it will try after " + retryDelaySecond
+                            Log.d(TAG, "Flowable get error, it will try after " + retryDelaySecond
                                     + " second, retry count " + retryCount);
-                            return Observable.timer(retryDelaySecond,
+                            return Flowable.timer(retryDelaySecond,
                                     TimeUnit.SECONDS);
                         }
                         // Max retries hit. Just pass the error along.
-                        return Observable.error(throwable);
+                        return Flowable.error(throwable);
                     }
                 });
     }

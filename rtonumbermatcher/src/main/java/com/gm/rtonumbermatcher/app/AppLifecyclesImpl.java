@@ -46,6 +46,11 @@ public class AppLifecyclesImpl implements AppLifecycles {
 
     @Override
     public void onCreate(Application application) {
+        if (LeakCanary.isInAnalyzerProcess(application)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
         if (BuildConfig.LOG_DEBUG) {
             //Timber is initialized
             //Timber is a log frame container, the external use of a unified Api, the internal can be dynamically switched to any log frame (print strategy) for log printing

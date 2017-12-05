@@ -22,7 +22,8 @@ ext {
             minSdkVersion    : 15,
             targetSdkVersion : 26,
             versionCode      : 1,
-            versionName      : "1.0"
+            versionName      : "1.0",
+            gmarchmvvm       : "0.1"
     ]
 
     version = [
@@ -38,6 +39,11 @@ ext {
     ]
 
     dependencies = [
+            //GmArchMvvm
+            "lifecycle"                : "com.github.goutham106.gmarchmvvm:lifecycle:${android["gmarchmvvm"]}",
+            "repository"               : "com.github.goutham106.gmarchmvvm:repository:${android["gmarchmvvm"]}",
+            "archmvvm"                 : "com.github.goutham106.gmarchmvvm:gmarchmvvm:${android["gmarchmvvm"]}",
+
             //support
             "appcompat-v7"             : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
             "design"                   : "com.android.support:design:${version["androidSupportSdkVersion"]}",

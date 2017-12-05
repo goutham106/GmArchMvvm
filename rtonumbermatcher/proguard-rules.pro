@@ -219,5 +219,5 @@
 
 
 ################Write your own class of operations#################
-#-keep class com.gm.rtonumbermatcher.**{*;}
+-keep class com.gm.rtonumbermatcher.**{*;}
 

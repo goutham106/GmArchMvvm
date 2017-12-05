@@ -14,26 +14,18 @@
  *    limitations under the License.
  */
 
-package com.gm.repository.rxerrorhandler.handler.listener;
-
-import android.content.Context;
+package com.gm.repository.http;
 
 /**
  * Author     : Gowtham
  * Email      : goutham.gm11@gmail.com
  * Github     : https://github.com/goutham106
- * Created on : 9/19/17.
+ * Created on : 11/22/17.
+ * Network request status and retry
  */
-
-public interface ResponseErrorListener {
-
-    void handleResponseError(Context context, Throwable t);
-
-    ResponseErrorListener EMPTY = new ResponseErrorListener() {
-        @Override
-        public void handleResponseError(Context context, Throwable t) {
-
-
-        }
-    };
+public interface IRetry {
+    /**
+     * Used to encapsulate refresh operations, which can be overridden if the subclass's business has refresh logic
+     */
+    void retry();
 }

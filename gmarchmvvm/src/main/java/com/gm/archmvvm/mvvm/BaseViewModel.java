@@ -49,8 +49,7 @@ import io.reactivex.disposables.Disposable;
 public class BaseViewModel<M extends IModel> extends AndroidViewModel
         implements IViewModel, LifecycleObserver {
     //Data request status
-    public final ObservableField<Status> mStatus = new ObservableField<>();
-    protected CompositeDisposable mCompositeDisposable;
+    public final ObservableField<Status> STATUS = new ObservableField<>();
     protected M mModel;
 
     public BaseViewModel(Application application) {
@@ -74,34 +73,12 @@ public class BaseViewModel<M extends IModel> extends AndroidViewModel
         return true;
     }
 
-    //RxJava add a subscription
-    protected void addDispose(Disposable disposable) {
-        if (mCompositeDisposable == null) {
-            mCompositeDisposable = new CompositeDisposable();
-        }
-        mCompositeDisposable.add(disposable);//Put all disposable into, focus on processing
-    }
-
-    //RxJava automatically releases the subscription
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    protected void unDispose() {
-        if (mCompositeDisposable != null) {
-            //Guaranteed LifecycleOwner at the end of the cancellation of all ongoing subscriptions
-            mCompositeDisposable.clear();
-        }
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();
         if (useEventBus())
             EventBus.getDefault().unregister(this);//Unregister eventbus
 
-    }
-
-    //Used for package refresh operation
-    public void retry() {
-        //If the subclass's business has refresh logic, you can override this method
     }
 
 }

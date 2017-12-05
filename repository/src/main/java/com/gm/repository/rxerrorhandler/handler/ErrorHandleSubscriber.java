@@ -32,7 +32,7 @@ import io.reactivex.disposables.Disposable;
 public abstract class ErrorHandleSubscriber<T> implements Observer<T> {
     private ErrorHandlerFactory mHandlerFactory;
 
-    public ErrorHandleSubscriber(RxErrorHandler rxErrorHandler) {
+    public ErrorHandleSubscriber(RxErrorHandler rxErrorHandler){
         this.mHandlerFactory = rxErrorHandler.getHandlerFactory();
     }
 
@@ -50,8 +50,8 @@ public abstract class ErrorHandleSubscriber<T> implements Observer<T> {
 
 
     @Override
-    public void onError(@NonNull Throwable e) {
-        e.printStackTrace();
-        mHandlerFactory.handleError(e);
+    public void onError(@NonNull Throwable t) {
+        t.printStackTrace();
+        mHandlerFactory.handleError(t);
     }
 }
