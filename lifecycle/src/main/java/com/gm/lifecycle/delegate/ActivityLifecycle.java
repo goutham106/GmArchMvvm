@@ -150,7 +150,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     }
 
     /**
-     * To set the lifecycle of all Fragments settings for each Activity, the Activity can be accessed through {@link IActivity # useFragment ()}
+     * To set the lifecycle of all Fragments settings for each Activity, the Activity can be accessed through {@link IActivity #useFragment()}
      * Set whether to use the monitor, if the Activity returns false, then the activities of all the following Fragment will not be able to use {@link FragmentDelegate}
      *
      * @param activity: Activity

@@ -33,7 +33,7 @@ import java.util.List;
  * Created on : 9/18/17.
  */
 public final class ManifestGmParser {
-    private static final String MODULE_VALUE = "ConfigArms";
+    private static final String MODULE_VALUE = "ConfigGm";
 
     private final Context context;
 
@@ -46,21 +46,21 @@ public final class ManifestGmParser {
         try {
             clazz = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Unable to find ConfigArms implementation", e);
+            throw new IllegalArgumentException("Unable to find ConfigGm implementation", e);
         }
 
         Object gms;
         try {
             gms = clazz.newInstance();
         } catch (InstantiationException e) {
-            throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
+            throw new RuntimeException("Unable to instantiate ConfigGm implementation for " + clazz, e);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to instantiate ConfigArms implementation for " + clazz, e);
+            throw new RuntimeException("Unable to instantiate ConfigGm implementation for " + clazz, e);
         }
 
 
         if (!(gms instanceof ConfigGm)) {
-            throw new RuntimeException("Expected instanceof ConfigArms, but found: " + gms);
+            throw new RuntimeException("Expected instanceof ConfigGm, but found: " + gms);
         }
         return (ConfigGm) gms;
     }
@@ -74,13 +74,13 @@ public final class ManifestGmParser {
                 for (String key : appInfo.metaData.keySet()) {
                     if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
                         Log.d("Gm ---> ",
-                                String.format("Find ConfigArms in [%s]", key));
+                                String.format("Find ConfigGm in [%s]", key));
                         configGms.add(parseModule(key));
                     }
                 }
             }
         } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException("Unable to find metadata to parse ConfigArms", e);
+            throw new RuntimeException("Unable to find metadata to parse ConfigGm", e);
         }
 
         return configGms;

@@ -63,7 +63,7 @@ public class UiUtils {
     }
 
     /**
-     * 设置hint大小
+     * Set hint size
      *
      * @param size
      * @param v
@@ -72,12 +72,12 @@ public class UiUtils {
     public static void setViewHintSize(Context context, int size, TextView v, int res) {
         SpannableString ss = new SpannableString(getResources(context).getString(
                 res));
-        // 新建一个属性对象,设置文字的大小
+        // Create a new property object, set the size of the text
         AbsoluteSizeSpan ass = new AbsoluteSizeSpan(size, true);
-        // 附加属性到文本
+        // Attach attributes to text
         ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        // 设置hint,一定要进行转换,否则属性会消失
+        // Set hint, must be converted, otherwise the property will disappear
         v.setHint(new SpannedString(ss));
     }
 

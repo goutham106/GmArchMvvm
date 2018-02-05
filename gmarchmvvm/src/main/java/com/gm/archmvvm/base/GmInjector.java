@@ -83,9 +83,9 @@ public class GmInjector implements IGm {
 
     /**
      * Encapsulate the global configuration information of the app into the module (using Dagger to place where the information needs to be configured)
-     *      * Requires declaration of {@link ConfigGm} in AndroidManifest, similar to Glide's configuration
+     * Requires declaration of {@link ConfigGm} in AndroidManifest, similar to Glide's configuration
      *
-     * @return ArmsConfigModule
+     * @return GmConfigModule
      *      
      */
     private GmConfigModule getGmConfigModule(Context context, List<ConfigGm> configGms) {

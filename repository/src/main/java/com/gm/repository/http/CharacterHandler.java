@@ -48,7 +48,7 @@ public class CharacterHandler {
     /**
      * emoji 过滤器
      */
-    public static final InputFilter emojiFilter = new InputFilter() {//emoji过滤器
+    public static final InputFilter emojiFilter = new InputFilter() {//emoji filter
 
         Pattern emoji = Pattern.compile(
                 "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",

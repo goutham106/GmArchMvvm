@@ -158,8 +158,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //gmarchmvvm
-//    implementation project(':gmarchmvvm')
-    implementation rootProject.ext.dependencies["archmvvm"]
+    implementation project(':gmarchmvvm')
+//    implementation rootProject.ext.dependencies["archmvvm"]
 
 
     //gmWidgets
